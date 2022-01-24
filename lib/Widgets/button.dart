@@ -22,7 +22,7 @@ class CustomeButton extends StatelessWidget {
         child: Text(
           buttonText.toUpperCase(),
           style: const TextStyle(
-              fontFamily: RIGHEOUS,
+              fontFamily: REGULAR_FONT,
               fontSize: 20,
               fontWeight: FontWeight.w400,
               letterSpacing: 4),

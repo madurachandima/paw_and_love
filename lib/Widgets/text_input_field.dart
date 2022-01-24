@@ -36,14 +36,14 @@ class CustomeTextInputField extends StatelessWidget {
     return TextField(
       // controller: textEditingController,
       style: const TextStyle(
-          color: Colors.white, fontSize: 15, fontFamily: RIGHEOUS),
+          color: Colors.white, fontSize: 15, fontFamily: REGULAR_FONT),
       decoration: InputDecoration(
         labelText: lableText,
         labelStyle: const TextStyle(
-            color: Colors.white, fontSize: 18, fontFamily: RIGHEOUS),
+            color: Colors.white, fontSize: 18, fontFamily: REGULAR_FONT),
         hintText: hintText,
         hintStyle: const TextStyle(
-            color: Colors.white, fontSize: 15, fontFamily: RIGHEOUS),
+            color: Colors.white, fontSize: 15, fontFamily: REGULAR_FONT),
         fillColor: Colors.white,
         focusedBorder: inputBorder,
         filled: false,
