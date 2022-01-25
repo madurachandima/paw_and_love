@@ -1,10 +1,24 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:group_radio_button/group_radio_button.dart';
-import 'package:paw_and_love/Auth/Login/screens/login.dart';
 import 'package:paw_and_love/Auth/Register/Screens/register.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  if (kIsWeb) {
+    await Firebase.initializeApp(
+        options: const FirebaseOptions(
+            apiKey: "AIzaSyDQEgqFqaZfq9QNE5-zbv1D-lCaGb2iHkU",
+            authDomain: "paw-and-love.firebaseapp.com",
+            projectId: "paw-and-love",
+            storageBucket: "paw-and-love.appspot.com",
+            messagingSenderId: "502263992957",
+            appId: "1:502263992957:web:318398e19cc30881939714"));
+  } else {
+    await Firebase.initializeApp();
+  }
+
   runApp(const MyApp());
 }
 

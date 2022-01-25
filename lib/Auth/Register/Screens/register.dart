@@ -5,20 +5,34 @@ import 'package:paw_and_love/Auth/Login/screens/login.dart';
 import 'package:paw_and_love/Auth/Register/Controller/registration_controller.dart';
 import 'package:paw_and_love/Config/color_config.dart';
 import 'package:paw_and_love/Config/font_config.dart';
+import 'package:paw_and_love/Utils/snackbar.dart';
 import 'package:paw_and_love/Widgets/button.dart';
 import 'package:paw_and_love/Widgets/text_input_field.dart';
 
 class Register extends StatelessWidget {
   const Register({Key? key}) : super(key: key);
 
-  void clickRegisterButton() {
-    debugPrint("call function");
-  }
-
   @override
   Widget build(BuildContext context) {
     RegistrationController _registrationController =
         Get.put(RegistrationController());
+    void clickRegisterButton() async {
+      debugPrint("call register function");
+      String response = await _registrationController.userRegistration();
+      if (response != "success") {
+        showSnackbar(
+            title: "Error",
+            message: response,
+            position: SnackPosition.TOP,
+            backgroundColor: Colors.transparent);
+      } else {
+        showSnackbar(
+            title: "Success",
+            message: "User registration success",
+            position: SnackPosition.TOP,
+            backgroundColor: Colors.transparent);
+      }
+    }
 
     return Scaffold(
       backgroundColor: ColorConfig.blueViolet,
@@ -47,36 +61,44 @@ class Register extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
               child: CustomeTextInputField(
+                  textEditingController:
+                      _registrationController.usernameController,
                   isPass: false,
                   lableText: "Username",
                   hintText: " Please Input Username",
                   textInputType: TextInputType.text),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
               child: CustomeTextInputField(
+                  textEditingController:
+                      _registrationController.emailController,
                   isPass: false,
                   lableText: "Email Address ",
                   hintText: " Please Input Email Address",
                   textInputType: TextInputType.emailAddress),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
               child: CustomeTextInputField(
+                  textEditingController:
+                      _registrationController.passwordController,
                   isPass: true,
                   lableText: "Password",
                   hintText: " Please Input Password",
                   textInputType: TextInputType.visiblePassword),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
               child: CustomeTextInputField(
+                  textEditingController:
+                      _registrationController.conPasswordController,
                   isPass: true,
-                  lableText: "Conform Password",
-                  hintText: " Please Input Conform Password",
+                  lableText: "Confirm Password",
+                  hintText: " Please Input Confirm Password",
                   textInputType: TextInputType.visiblePassword),
             ),
             Obx(() => RadioGroup<String>.builder(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:paw_and_love/Config/font_config.dart';
 
 class CustomeTextInputField extends StatelessWidget {
-  // final TextEditingController textEditingController;
+  final TextEditingController textEditingController;
   final bool isPass;
   final String hintText;
   final String lableText;
@@ -10,7 +10,7 @@ class CustomeTextInputField extends StatelessWidget {
 
   const CustomeTextInputField({
     Key? key,
-    // required this.textEditingController,
+    required this.textEditingController,
     required this.isPass,
     required this.hintText,
     required this.lableText,
@@ -34,7 +34,7 @@ class CustomeTextInputField extends StatelessWidget {
       ),
     );
     return TextField(
-      // controller: textEditingController,
+      controller: textEditingController,
       style: const TextStyle(
           color: Colors.white, fontSize: 15, fontFamily: REGULAR_FONT),
       decoration: InputDecoration(

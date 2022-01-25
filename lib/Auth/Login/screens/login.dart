@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:paw_and_love/Auth/Login/controller/login_controller.dart';
 import 'package:paw_and_love/Auth/Register/Screens/register.dart';
 import 'package:paw_and_love/Config/color_config.dart';
 import 'package:paw_and_love/Config/font_config.dart';
@@ -9,12 +10,13 @@ import 'package:paw_and_love/Widgets/text_input_field.dart';
 class Login extends StatelessWidget {
   const Login({Key? key}) : super(key: key);
 
-  void clickRegisterButton() {
-    debugPrint("call function");
-  }
-
   @override
   Widget build(BuildContext context) {
+    LoginControler _loginControler = Get.put(LoginControler());
+    void clickRegisterButton() {
+      debugPrint("call function");
+    }
+
     return Scaffold(
       backgroundColor: ColorConfig.blueViolet,
       body: SafeArea(
@@ -45,17 +47,21 @@ class Login extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 child: CustomeTextInputField(
+                    textEditingController: _loginControler.emailController,
                     isPass: false,
                     lableText: "Email Address ",
                     hintText: " Please Input Email Address",
                     textInputType: TextInputType.emailAddress),
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 child: CustomeTextInputField(
+                    textEditingController: _loginControler.passwordController,
                     isPass: true,
                     lableText: "Password",
                     hintText: " Please Input Password",
