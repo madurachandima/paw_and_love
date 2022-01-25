@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:group_radio_button/group_radio_button.dart';
 import 'package:paw_and_love/Auth/Login/screens/login.dart';
 import 'package:paw_and_love/Auth/Register/Screens/register.dart';
 
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(),
-      home: const Login(),
+      home: const Register(),
       debugShowCheckedModeBanner: false,
     );
   }
