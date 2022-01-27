@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:paw_and_love/Auth/Register/Screens/register.dart';
+import 'package:paw_and_love/Home/bottom_navigationbar_handler.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(),
-      home: const Register(),
+      home: const BottomNavigationbarHandler(),
       debugShowCheckedModeBanner: false,
     );
   }

@@ -15,6 +15,15 @@ class RegistrationController extends GetxController {
   var roletypes = ["User", "Vet", "Seller"];
   var selectedRole = "".obs;
 
+  @override
+  void dispose() {
+    usernameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    conPasswordController.dispose();
+    super.dispose();
+  }
+
   Future userRegistration() async {
     String? _username = usernameController.text;
     String? _email = emailController.text;
