@@ -7,7 +7,7 @@ import 'package:paw_and_love/Config/color_config.dart';
 import 'package:paw_and_love/Config/font_config.dart';
 import 'package:paw_and_love/Utils/snackbar.dart';
 import 'package:paw_and_love/Widgets/button.dart';
-import 'package:paw_and_love/Widgets/text_input_field.dart';
+import 'package:paw_and_love/Widgets/custome_text_input_field.dart';
 
 class Register extends StatelessWidget {
   const Register({Key? key}) : super(key: key);
@@ -69,7 +69,8 @@ class Register extends StatelessWidget {
                   isPass: false,
                   lableText: "Username",
                   hintText: " Please Input Username",
-                  textInputType: TextInputType.text),
+                  textInputType: TextInputType.text,
+                  textColor: Colors.white),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -79,7 +80,8 @@ class Register extends StatelessWidget {
                   isPass: false,
                   lableText: "Email Address ",
                   hintText: " Please Input Email Address",
-                  textInputType: TextInputType.emailAddress),
+                  textInputType: TextInputType.emailAddress,
+                  textColor: Colors.white),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -89,7 +91,8 @@ class Register extends StatelessWidget {
                   isPass: true,
                   lableText: "Password",
                   hintText: " Please Input Password",
-                  textInputType: TextInputType.visiblePassword),
+                  textInputType: TextInputType.visiblePassword,
+                  textColor: Colors.white),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -99,7 +102,8 @@ class Register extends StatelessWidget {
                   isPass: true,
                   lableText: "Confirm Password",
                   hintText: " Please Input Confirm Password",
-                  textInputType: TextInputType.visiblePassword),
+                  textInputType: TextInputType.visiblePassword,
+                  textColor: Colors.white),
             ),
             Obx(() => RadioGroup<String>.builder(
                   horizontalAlignment: MainAxisAlignment.spaceEvenly,

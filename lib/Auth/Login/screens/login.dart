@@ -5,7 +5,7 @@ import 'package:paw_and_love/Auth/Register/Screens/register.dart';
 import 'package:paw_and_love/Config/color_config.dart';
 import 'package:paw_and_love/Config/font_config.dart';
 import 'package:paw_and_love/Widgets/button.dart';
-import 'package:paw_and_love/Widgets/text_input_field.dart';
+import 'package:paw_and_love/Widgets/custome_text_input_field.dart';
 
 class Login extends StatelessWidget {
   const Login({Key? key}) : super(key: key);
@@ -51,11 +51,13 @@ class Login extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 child: CustomeTextInputField(
-                    textEditingController: _loginControler.emailController,
-                    isPass: false,
-                    lableText: "Email Address ",
-                    hintText: " Please Input Email Address",
-                    textInputType: TextInputType.emailAddress),
+                  textEditingController: _loginControler.emailController,
+                  isPass: false,
+                  lableText: "Email Address ",
+                  hintText: " Please Input Email Address",
+                  textInputType: TextInputType.emailAddress,
+                  textColor: Colors.white,
+                ),
               ),
               Padding(
                 padding:
@@ -65,7 +67,8 @@ class Login extends StatelessWidget {
                     isPass: true,
                     lableText: "Password",
                     hintText: " Please Input Password",
-                    textInputType: TextInputType.visiblePassword),
+                    textInputType: TextInputType.visiblePassword,
+                    textColor: Colors.white),
               ),
               Padding(
                 padding:

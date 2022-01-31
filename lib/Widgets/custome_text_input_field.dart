@@ -7,6 +7,7 @@ class CustomeTextInputField extends StatelessWidget {
   final String hintText;
   final String lableText;
   final TextInputType textInputType;
+  final Color textColor;
 
   const CustomeTextInputField({
     Key? key,
@@ -15,36 +16,37 @@ class CustomeTextInputField extends StatelessWidget {
     required this.hintText,
     required this.lableText,
     required this.textInputType,
+    required this.textColor,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final inputBorder = OutlineInputBorder(
       borderRadius: BorderRadius.circular(20.0),
-      borderSide: const BorderSide(
-        color: Colors.white,
+      borderSide: BorderSide(
+        color: textColor,
       ),
     );
 
     final outlineInputBorder = OutlineInputBorder(
       borderRadius: BorderRadius.circular(20.0),
-      borderSide: const BorderSide(
-        color: Colors.white,
+      borderSide: BorderSide(
+        color: textColor,
         width: 2.0,
       ),
     );
     return TextField(
       controller: textEditingController,
-      style: const TextStyle(
-          color: Colors.white, fontSize: 15, fontFamily: REGULAR_FONT),
+      style:
+          TextStyle(color: textColor, fontSize: 15, fontFamily: REGULAR_FONT),
       decoration: InputDecoration(
         labelText: lableText,
-        labelStyle: const TextStyle(
-            color: Colors.white, fontSize: 18, fontFamily: REGULAR_FONT),
+        labelStyle:
+            TextStyle(color: textColor, fontSize: 18, fontFamily: REGULAR_FONT),
         hintText: hintText,
-        hintStyle: const TextStyle(
-            color: Colors.white, fontSize: 15, fontFamily: REGULAR_FONT),
-        fillColor: Colors.white,
+        hintStyle:
+            TextStyle(color: textColor, fontSize: 15, fontFamily: REGULAR_FONT),
+        fillColor: textColor,
         focusedBorder: inputBorder,
         filled: false,
         enabledBorder: outlineInputBorder,
