@@ -8,16 +8,20 @@ class CustomeTextInputField extends StatelessWidget {
   final String lableText;
   final TextInputType textInputType;
   final Color textColor;
+  final bool isReadOnly;
+  var callbackFunction;
 
-  const CustomeTextInputField({
-    Key? key,
-    required this.textEditingController,
-    required this.isPass,
-    required this.hintText,
-    required this.lableText,
-    required this.textInputType,
-    required this.textColor,
-  }) : super(key: key);
+  CustomeTextInputField(
+      {Key? key,
+      required this.textEditingController,
+      required this.isPass,
+      required this.hintText,
+      required this.lableText,
+      required this.textInputType,
+      required this.textColor,
+      required this.isReadOnly,
+      this.callbackFunction})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +40,17 @@ class CustomeTextInputField extends StatelessWidget {
       ),
     );
     return TextField(
+      onTap: () {
+        if (callbackFunction != null) {
+          callbackFunction();
+        }
+      },
+      readOnly: isReadOnly,
       controller: textEditingController,
       style:
           TextStyle(color: textColor, fontSize: 15, fontFamily: REGULAR_FONT),
       decoration: InputDecoration(
-        labelText: lableText,
+        //labelText: lableText,
         labelStyle:
             TextStyle(color: textColor, fontSize: 18, fontFamily: REGULAR_FONT),
         hintText: hintText,

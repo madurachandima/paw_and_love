@@ -9,6 +9,7 @@ import 'package:paw_and_love/Config/color_config.dart';
 import 'package:paw_and_love/Config/font_config.dart';
 import 'package:paw_and_love/Home/Profiles/DogProfile/controller/profile_controller.dart';
 import 'package:paw_and_love/Utils/const.dart';
+import 'package:paw_and_love/Utils/utill.dart';
 import 'package:paw_and_love/Widgets/custome_text_input_field.dart';
 
 class AddNewDogProfile extends StatelessWidget {
@@ -64,11 +65,25 @@ class AddNewDogProfile extends StatelessWidget {
                   padding: const EdgeInsets.only(
                       left: 20, right: 20, top: 20, bottom: 10),
                   child: CustomeTextInputField(
+                      isReadOnly: false,
                       textEditingController:
                           _profileController.dogNameController,
                       isPass: false,
                       hintText: "Dog Name",
                       lableText: "Please Enter Dog Name",
+                      textInputType: TextInputType.text,
+                      textColor: ColorConfig.orange),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 20, right: 20, top: 20, bottom: 10),
+                  child: CustomeTextInputField(
+                      isReadOnly: false,
+                      textEditingController:
+                          _profileController.dogOwnerNameController,
+                      isPass: false,
+                      hintText: "Dog Owner Name",
+                      lableText: "Please Enter Dog Owner Name",
                       textInputType: TextInputType.text,
                       textColor: ColorConfig.orange),
                 ),
@@ -123,12 +138,44 @@ class AddNewDogProfile extends StatelessWidget {
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: Obx(() => CustomeTextInputField(
+                      callbackFunction: () async {
+                        DateTime? selectedDate = await getDate(context);
+                        getTheDogAge("2020-02-12");
+                        // returnDogAge(year: 2020, month: 02, date: 12);
+                        if (selectedDate != null) {
+                          String date = selectedDate.year.toString() +
+                              "-" +
+                              selectedDate.month.toString() +
+                              "-" +
+                              selectedDate.day.toString();
+                          _profileController.dogBirthDateController.value.text =
+                              date;
+                          getTheDogAge(date);
+                        } else {
+                          _profileController.dogBirthDateController.value.text =
+                              "";
+                        }
+                      },
+                      isReadOnly: true,
+                      textEditingController:
+                          _profileController.dogBirthDateController.value,
+                      isPass: false,
+                      hintText: "Dog Birth Date",
+                      lableText: "Please Select Dog Birth Date",
+                      textInputType: TextInputType.text,
+                      textColor: ColorConfig.orange)),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 20, right: 20, top: 20, bottom: 10),
                   child: CustomeTextInputField(
+                      isReadOnly: true,
                       textEditingController:
                           _profileController.dogNameController,
                       isPass: false,
-                      hintText: "Dog Breed",
-                      lableText: "Please Enter Dog Breed",
+                      hintText: "Dog Age",
+                      lableText: "Please Enter Dog Name",
                       textInputType: TextInputType.text,
                       textColor: ColorConfig.orange),
                 )

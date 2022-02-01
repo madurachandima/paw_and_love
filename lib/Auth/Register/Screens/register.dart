@@ -66,6 +66,7 @@ class Register extends StatelessWidget {
               child: CustomeTextInputField(
                   textEditingController:
                       _registrationController.usernameController,
+                  isReadOnly: false,
                   isPass: false,
                   lableText: "Username",
                   hintText: " Please Input Username",
@@ -78,6 +79,7 @@ class Register extends StatelessWidget {
                   textEditingController:
                       _registrationController.emailController,
                   isPass: false,
+                  isReadOnly: false,
                   lableText: "Email Address ",
                   hintText: " Please Input Email Address",
                   textInputType: TextInputType.emailAddress,
@@ -88,6 +90,7 @@ class Register extends StatelessWidget {
               child: CustomeTextInputField(
                   textEditingController:
                       _registrationController.passwordController,
+                  isReadOnly: false,
                   isPass: true,
                   lableText: "Password",
                   hintText: " Please Input Password",
@@ -99,6 +102,7 @@ class Register extends StatelessWidget {
               child: CustomeTextInputField(
                   textEditingController:
                       _registrationController.conPasswordController,
+                  isReadOnly: false,
                   isPass: true,
                   lableText: "Confirm Password",
                   hintText: " Please Input Confirm Password",

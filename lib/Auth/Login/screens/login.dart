@@ -52,6 +52,7 @@ class Login extends StatelessWidget {
                     const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 child: CustomeTextInputField(
                   textEditingController: _loginControler.emailController,
+                  isReadOnly: false,
                   isPass: false,
                   lableText: "Email Address ",
                   hintText: " Please Input Email Address",
@@ -64,6 +65,7 @@ class Login extends StatelessWidget {
                     const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 child: CustomeTextInputField(
                     textEditingController: _loginControler.passwordController,
+                    isReadOnly: false,
                     isPass: true,
                     lableText: "Password",
                     hintText: " Please Input Password",
