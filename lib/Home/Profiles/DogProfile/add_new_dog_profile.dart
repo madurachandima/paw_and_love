@@ -9,6 +9,7 @@ import 'package:paw_and_love/Config/color_config.dart';
 import 'package:paw_and_love/Config/font_config.dart';
 import 'package:paw_and_love/Home/Profiles/DogProfile/controller/profile_controller.dart';
 import 'package:paw_and_love/Utils/const.dart';
+import 'package:paw_and_love/Utils/date_utill_base.dart';
 import 'package:paw_and_love/Utils/utill.dart';
 import 'package:paw_and_love/Widgets/custome_text_input_field.dart';
 
@@ -141,7 +142,7 @@ class AddNewDogProfile extends StatelessWidget {
                   child: Obx(() => CustomeTextInputField(
                       callbackFunction: () async {
                         DateTime? selectedDate = await getDate(context);
-                        getTheDogAge("2020-02-12");
+                        //getTheDogAge("2020-02-12");
                         // returnDogAge(year: 2020, month: 02, date: 12);
                         if (selectedDate != null) {
                           String date = selectedDate.year.toString() +
@@ -151,7 +152,9 @@ class AddNewDogProfile extends StatelessWidget {
                               selectedDate.day.toString();
                           _profileController.dogBirthDateController.value.text =
                               date;
-                          getTheDogAge(date);
+                          // getTheDogAge(date);
+                          var a = DateUtil().getWeek(11, 9, 2021);
+                          debugPrint(a.toString());
                         } else {
                           _profileController.dogBirthDateController.value.text =
                               "";
