@@ -7,6 +7,7 @@ import 'package:paw_and_love/Home/Profiles/DogProfile/dog_profiles.dart';
 import 'package:paw_and_love/Home/breeders&sellers/breeders_&_sellers.dart';
 import 'package:paw_and_love/Home/commonDisses/common_disses.dart';
 import 'package:paw_and_love/Home/veterinarian/veterinarian.dart';
+import 'package:sizer/sizer.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -21,17 +22,18 @@ class Home extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             RichText(
-                text: const TextSpan(
+                text: TextSpan(
                     text: "What are you looking for, ",
                     style: TextStyle(
                         color: Colors.black,
                         fontFamily: REGULAR_FONT,
-                        fontSize: 35,
+                        fontSize: 30.sp,
                         fontWeight: FontWeight.w500),
                     children: [
                   TextSpan(
                     text: "User\n",
-                    style: TextStyle(fontSize: 30, color: ColorConfig.yellow),
+                    style:
+                        TextStyle(fontSize: 30.sp, color: ColorConfig.yellow),
                   ),
                 ])),
             Row(
@@ -90,22 +92,21 @@ class Home extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(
-                  width: MediaQuery.of(context).size.width / 2.70,
-                  height: 140,
+                  width: 35.w,
+                  height: 20.h,
                   child: Padding(
                     padding: const EdgeInsets.all(14.0),
                     child: Image.asset(image),
                   )),
-              const SizedBox(
-                height: 5,
+              SizedBox(
+                height: 2.h,
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 14.0),
                 child: Text(
                   text,
                   textAlign: TextAlign.center,
-                  style:
-                      const TextStyle(fontSize: 15, fontFamily: REGULAR_FONT),
+                  style: TextStyle(fontSize: 12.sp, fontFamily: REGULAR_FONT),
                 ),
               )
             ],

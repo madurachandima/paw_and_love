@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:paw_and_love/Config/color_config.dart';
 import 'package:paw_and_love/Home/Profiles/DogProfile/add_new_dog_profile.dart';
+import 'package:sizer/sizer.dart';
 
 class DogProfile extends StatelessWidget {
   const DogProfile({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class DogProfile extends StatelessWidget {
               SliverAppBar(
                 elevation: 0,
                 backgroundColor: ColorConfig.darkBlue,
-                expandedHeight: MediaQuery.of(context).size.height / 2,
+                expandedHeight: 50.h,
                 floating: false,
                 pinned: true,
                 flexibleSpace: FlexibleSpaceBar(
@@ -39,11 +40,10 @@ class DogProfile extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
-                    height: 100,
-                    width: 100,
+                    height: 20.h,
+                    width: 25.w,
                     child: IconButton(
                         onPressed: () {
-                          debugPrint("all");
                           Get.to(() => const AddNewDogProfile());
                         },
                         icon: const Icon(

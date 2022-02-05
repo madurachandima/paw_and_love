@@ -1,15 +1,13 @@
-import 'dart:convert';
-
 import 'package:dropdown_search/dropdown_search.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 import 'package:get/get.dart';
 import 'package:paw_and_love/Config/color_config.dart';
 import 'package:paw_and_love/Config/font_config.dart';
 import 'package:paw_and_love/Home/Profiles/DogProfile/controller/profile_controller.dart';
 import 'package:paw_and_love/Utils/const.dart';
-import 'package:paw_and_love/Utils/date_utill_base.dart';
+import 'package:sizer/sizer.dart';
 import 'package:paw_and_love/Utils/utill.dart';
 import 'package:paw_and_love/Widgets/custome_text_input_field.dart';
 
@@ -26,7 +24,7 @@ class AddNewDogProfile extends StatelessWidget {
               SliverAppBar(
                 elevation: 0,
                 backgroundColor: ColorConfig.darkBlue,
-                expandedHeight: MediaQuery.of(context).size.height / 2,
+                expandedHeight: 50.h,
                 floating: false,
                 pinned: true,
                 flexibleSpace: FlexibleSpaceBar(
@@ -43,10 +41,10 @@ class AddNewDogProfile extends StatelessWidget {
                         fit: BoxFit.cover,
                       ),
                       Positioned(
-                          height: 50,
-                          width: 50,
+                          height: 8.h,
+                          width: 8.w,
                           bottom: 10,
-                          left: MediaQuery.of(context).size.width / 1.2,
+                          left: 80.w,
                           child: IconButton(
                               onPressed: () {
                                 debugPrint("Click");
@@ -92,7 +90,7 @@ class AddNewDogProfile extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   child: SizedBox(
-                    height: 60,
+                    height: 8.h,
                     child: Theme(
                       data: Theme.of(context).copyWith(
                         canvasColor: Colors.white,
@@ -103,14 +101,14 @@ class AddNewDogProfile extends StatelessWidget {
                       child: DropdownSearch(
                         dropdownSearchDecoration: InputDecoration(
                           labelText: "Please Select Dog Breed",
-                          labelStyle: const TextStyle(
+                          labelStyle: TextStyle(
                               color: ColorConfig.orange,
-                              fontSize: 18,
+                              fontSize: 13.sp,
                               fontFamily: REGULAR_FONT),
                           hintText: "Dog Breed",
-                          hintStyle: const TextStyle(
+                          hintStyle: TextStyle(
                               color: ColorConfig.orange,
-                              fontSize: 15,
+                              fontSize: 13.sp,
                               fontFamily: REGULAR_FONT),
                           fillColor: ColorConfig.orange,
                           focusedBorder: OutlineInputBorder(
@@ -142,19 +140,27 @@ class AddNewDogProfile extends StatelessWidget {
                   child: Obx(() => CustomeTextInputField(
                       callbackFunction: () async {
                         DateTime? selectedDate = await getDate(context);
-                        //getTheDogAge("2020-02-12");
-                        // returnDogAge(year: 2020, month: 02, date: 12);
+
                         if (selectedDate != null) {
                           String date = selectedDate.year.toString() +
-                              "-" +
+                              " / " +
                               selectedDate.month.toString() +
-                              "-" +
+                              " / " +
                               selectedDate.day.toString();
                           _profileController.dogBirthDateController.value.text =
                               date;
-                          // getTheDogAge(date);
-                          var a = DateUtil().getWeek(11, 9, 2021);
-                          debugPrint(a.toString());
+
+                          // var a = daysBetween(
+                          //     DateTime(selectedDate.year, selectedDate.month,
+                          //         selectedDate.day),
+                          //     DateTime.now());
+
+                          // if (a > 0) {
+                          //   getDaysByWeeks(a);
+                          // } else {
+                          //   // show error
+                          //   debugPrint("Invalid dog birthdate");
+                          // }
                         } else {
                           _profileController.dogBirthDateController.value.text =
                               "";
@@ -170,17 +176,60 @@ class AddNewDogProfile extends StatelessWidget {
                       textColor: ColorConfig.orange)),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(
-                      left: 20, right: 20, top: 20, bottom: 10),
-                  child: CustomeTextInputField(
-                      isReadOnly: true,
-                      textEditingController:
-                          _profileController.dogNameController,
-                      isPass: false,
-                      hintText: "Dog Age",
-                      lableText: "Please Enter Dog Name",
-                      textInputType: TextInputType.text,
-                      textColor: ColorConfig.orange),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 2.w),
+                        child: Text(
+                          "Gender",
+                          style: TextStyle(
+                              fontSize: 13.sp, color: ColorConfig.orange),
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: 40.w,
+                            child: Obx(() => RadioListTile<DogGender>(
+                                  activeColor: ColorConfig.orange,
+                                  title: Text(
+                                    'Male',
+                                    style: TextStyle(
+                                        color: ColorConfig.orange,
+                                        fontSize: 13.sp),
+                                  ),
+                                  value: DogGender.male,
+                                  groupValue: _profileController.gender.value,
+                                  onChanged: (value) {
+                                    _profileController.gender.value = value!;
+                                  },
+                                )),
+                          ),
+                          const Spacer(),
+                          SizedBox(
+                            width: 40.w,
+                            child: Obx(() => RadioListTile<DogGender>(
+                                  activeColor: ColorConfig.orange,
+                                  title: Text(
+                                    'Female',
+                                    style: TextStyle(
+                                        color: ColorConfig.orange,
+                                        fontSize: 13.sp),
+                                  ),
+                                  value: DogGender.female,
+                                  groupValue: _profileController.gender.value,
+                                  onChanged: (value) {
+                                    _profileController.gender.value = value!;
+                                  },
+                                )),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 )
               ]))
             ];

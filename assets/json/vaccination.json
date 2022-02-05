@@ -1,0 +1,40 @@
+{
+  "AgeGroup": [
+    {
+      "6-8": [
+        { "recommended": ["Distemper", "Parvovirus"] },
+        { "optional": ["Bordetella"] }
+      ]
+    },
+    {
+        "10-12": [
+          { "recommended": ["DHPP"] },
+          { "optional": ["Influenza","Leptospirosis","Bordetella","Lyme Disease"] }
+        ]
+      },
+      {
+        "16-18": [
+          { "recommended": ["DHPP","Rabies"] },
+          { "optional": ["Influenza","Leptospirosis","Bordetella","Lyme Disease"] }
+        ]
+      },
+      {
+        "52-69": [
+          { "recommended": ["DHPP,Rabies"] },
+          { "optional": ["CoronaVirus","Leptospirosis","Bordetella","Lyme Disease"] }
+        ]
+      },
+      {
+        "1y-2y": [
+          { "recommended": ["DHPP"] },
+          { "optional": ["Influenza","CoronaVirus","Leptospirosis","Bordetella","Lyme Disease"] }
+        ]
+      },
+      {
+        "1y-3y": [
+          { "recommended": ["Rabies"] },
+          { "optional": [] }
+        ]
+      }
+  ]
+}

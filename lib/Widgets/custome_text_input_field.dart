@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paw_and_love/Config/font_config.dart';
+import 'package:sizer/sizer.dart';
 
 class CustomeTextInputField extends StatelessWidget {
   final TextEditingController textEditingController;
@@ -47,15 +48,15 @@ class CustomeTextInputField extends StatelessWidget {
       },
       readOnly: isReadOnly,
       controller: textEditingController,
-      style:
-          TextStyle(color: textColor, fontSize: 15, fontFamily: REGULAR_FONT),
+      style: TextStyle(
+          color: textColor, fontSize: 13.sp, fontFamily: REGULAR_FONT),
       decoration: InputDecoration(
         //labelText: lableText,
-        labelStyle:
-            TextStyle(color: textColor, fontSize: 18, fontFamily: REGULAR_FONT),
+        labelStyle: TextStyle(
+            color: textColor, fontSize: 15.sp, fontFamily: REGULAR_FONT),
         hintText: hintText,
-        hintStyle:
-            TextStyle(color: textColor, fontSize: 15, fontFamily: REGULAR_FONT),
+        hintStyle: TextStyle(
+            color: textColor, fontSize: 13.sp, fontFamily: REGULAR_FONT),
         fillColor: textColor,
         focusedBorder: inputBorder,
         filled: false,
