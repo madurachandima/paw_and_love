@@ -21,7 +21,9 @@ getDaysByWeeks(int days) {
   int weeks;
   if (days > 7) {
     weeks = days ~/ 7;
-    debugPrint(weeks.toString());
+    return weeks;
+  } else {
+    return 0;
   }
 }
 
