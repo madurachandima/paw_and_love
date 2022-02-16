@@ -9,6 +9,9 @@ import 'package:paw_and_love/Config/color_config.dart';
 import 'package:paw_and_love/Config/font_config.dart';
 import 'package:paw_and_love/Home/Profiles/DogProfile/controller/profile_controller.dart';
 import 'package:paw_and_love/Utils/const.dart';
+import 'package:paw_and_love/Utils/snackbar.dart';
+import 'package:paw_and_love/Utils/styles.dart';
+import 'package:paw_and_love/Widgets/button.dart';
 import 'package:sizer/sizer.dart';
 import 'package:paw_and_love/Utils/utill.dart';
 import 'package:paw_and_love/Widgets/custome_text_input_field.dart';
@@ -19,13 +22,16 @@ class AddNewDogProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ProfileController _profileController = Get.put(ProfileController());
+    createNewDogProfle() async {
+      await _profileController.saveNewDogprofile();
+    }
+
     return Scaffold(
       body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return [
               SliverAppBar(
                 elevation: 0,
-                backgroundColor: ColorConfig.darkBlue,
                 expandedHeight: 50.h,
                 floating: false,
                 pinned: true,
@@ -88,6 +94,7 @@ class AddNewDogProfile extends StatelessWidget {
                           textInputType: TextInputType.text,
                           textColor: ColorConfig.orange),
                     ),
+                    //dog breed
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 10),
@@ -96,11 +103,19 @@ class AddNewDogProfile extends StatelessWidget {
                         child: Theme(
                           data: Theme.of(context).copyWith(
                             canvasColor: Colors.white,
+                            textTheme: const TextTheme(
+                                subtitle1:
+                                    TextStyle(color: ColorConfig.orange)),
                             iconTheme: const IconThemeData(
                               color: ColorConfig.orange,
                             ),
                           ),
                           child: DropdownSearch(
+                            popupBarrierColor: Colors.transparent,
+                            dropdownSearchBaseStyle: TextStyle(
+                                color: ColorConfig.orange, fontSize: 13.sp),
+                            onChanged: (value) =>
+                                _profileController.dogBreed = value.toString(),
                             dropdownSearchDecoration: InputDecoration(
                               labelText: "Please Select Dog Breed",
                               labelStyle: TextStyle(
@@ -136,6 +151,7 @@ class AddNewDogProfile extends StatelessWidget {
                         ),
                       ),
                     ),
+                    //dog birthdate
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 10),
@@ -143,33 +159,49 @@ class AddNewDogProfile extends StatelessWidget {
                           callbackFunction: () async {
                             DateTime? selectedDate = await getDate(context);
 
-                            if (selectedDate != null) {
-                              String date = selectedDate.year.toString() +
-                                  " / " +
-                                  selectedDate.month.toString() +
-                                  " / " +
-                                  selectedDate.day.toString();
-                              _profileController
-                                  .dogBirthDateController.value.text = date;
+                            if (selectedDate!.isBefore(DateTime.now())) {
+                              // ignore: unnecessary_null_comparison
+                              if (selectedDate != null) {
+                                _profileController.birthdate = selectedDate;
+                                String date = selectedDate.year.toString() +
+                                    "-" +
+                                    selectedDate.month.toString() +
+                                    "-" +
+                                    selectedDate.day.toString();
+                                _profileController
+                                    .dogBirthDateController.value.text = date;
 
-                              var a = daysBetween(
-                                  DateTime(selectedDate.year,
-                                      selectedDate.month, selectedDate.day),
-                                  DateTime.now());
+                                var a = daysBetween(
+                                    DateTime(selectedDate.year,
+                                        selectedDate.month, selectedDate.day),
+                                    DateTime.now());
 
-                              if (a > 0) {
-                                int weeks = getDaysByWeeks(a);
-                                if (weeks > 0) {
-                                  _profileController.getVaccinationByAge(
-                                      age: weeks);
+                                if (a > 0) {
+                                  _profileController.birthdateByWeeks =
+                                      getDaysByWeeks(a);
+                                  if (_profileController.birthdateByWeeks! >
+                                      0) {
+                                    _profileController.getVaccinationByAge(
+                                        age: _profileController
+                                            .birthdateByWeeks!);
+                                  }
+                                } else {
+                                  flutterToastMessage(
+                                      title: "Error",
+                                      message: "Invalid Birthdate",
+                                      position: SnackPosition.TOP,
+                                      backgroundColor: ColorConfig.errorRed);
                                 }
                               } else {
-                                //   // show error
-                                debugPrint("Invalid dog birthdate");
+                                _profileController
+                                    .dogBirthDateController.value.text = "";
                               }
                             } else {
-                              _profileController
-                                  .dogBirthDateController.value.text = "";
+                              flutterToastMessage(
+                                  title: "Error",
+                                  message: "Invalid Birthdate",
+                                  position: SnackPosition.TOP,
+                                  backgroundColor: ColorConfig.errorRed);
                             }
                           },
                           isReadOnly: true,
@@ -243,74 +275,113 @@ class AddNewDogProfile extends StatelessWidget {
                     ),
                     if (_profileController.recommendedVaccines.isNotEmpty)
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 10),
-                        child: Obx(() => ListView.builder(
-                            itemCount:
-                                _profileController.recommendedVaccines.length,
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemBuilder: (BuildContext context, index) {
-                              return CheckboxListTile(
-                                title: Text(_profileController
-                                    .recommendedVaccines[index]
-                                    .entries
-                                    .first
-                                    .key
-                                    .toString()),
-                                value: _profileController
-                                    .recommendedVaccines[index]
-                                    .entries
-                                    .first
-                                    .value,
-                                onChanged: (value) {
-                                  Map<String, bool> elementMap = {
-                                    _profileController
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Please select the vaccine gave to your Dog",
+                              style: subHeadingStyle(),
+                            ),
+                            const Divider(
+                              color: Colors.black26,
+                              height: 10,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 5),
+                              child: Text("Recomonded Vaccines",
+                                  style: subTopicStyle()),
+                            ),
+                            Obx(() => ListView.builder(
+                                itemCount: _profileController
+                                    .recommendedVaccines.length,
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemBuilder: (BuildContext context, index) {
+                                  return CheckboxListTile(
+                                    activeColor: ColorConfig.orange,
+                                    title: Text(_profileController
                                         .recommendedVaccines[index]
                                         .entries
                                         .first
-                                        .key: value!
-                                  };
-                                  _profileController.recommendedVaccines
-                                      .removeAt(index);
-                                  _profileController.recommendedVaccines
-                                      .insert(index, elementMap);
-                                },
-                              );
-                            })),
+                                        .key
+                                        .toString()),
+                                    value: _profileController
+                                        .recommendedVaccines[index]
+                                        .entries
+                                        .first
+                                        .value,
+                                    onChanged: (value) {
+                                      Map<String, bool> elementMap = {
+                                        _profileController
+                                            .recommendedVaccines[index]
+                                            .entries
+                                            .first
+                                            .key: value!
+                                      };
+                                      _profileController.recommendedVaccines
+                                          .removeAt(index);
+                                      _profileController.recommendedVaccines
+                                          .insert(index, elementMap);
+                                    },
+                                  );
+                                })),
+                          ],
+                        ),
                       ),
                     if (_profileController.optionalVaccines.isNotEmpty)
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 10),
-                        child: Obx(() => ListView.builder(
-                            itemCount:
-                                _profileController.optionalVaccines.length,
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemBuilder: (BuildContext context, index) {
-                              return CheckboxListTile(
-                                title: Text(_profileController
-                                    .optionalVaccines[index].entries.first.key
-                                    .toString()),
-                                value: _profileController
-                                    .optionalVaccines[index]
-                                    .entries
-                                    .first
-                                    .value,
-                                onChanged: (value) {
-                                  Map<String, bool> elementMap = {
-                                    _profileController.optionalVaccines[index]
-                                        .entries.first.key: value!
-                                  };
-                                  _profileController.optionalVaccines
-                                      .removeAt(index);
-                                  _profileController.optionalVaccines
-                                      .insert(index, elementMap);
-                                },
-                              );
-                            })),
-                      )
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Optional Vaccines", style: subTopicStyle()),
+                            Obx(() => ListView.builder(
+                                itemCount:
+                                    _profileController.optionalVaccines.length,
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemBuilder: (BuildContext context, index) {
+                                  return CheckboxListTile(
+                                    activeColor: ColorConfig.orange,
+                                    title: Text(_profileController
+                                        .optionalVaccines[index]
+                                        .entries
+                                        .first
+                                        .key
+                                        .toString()),
+                                    value: _profileController
+                                        .optionalVaccines[index]
+                                        .entries
+                                        .first
+                                        .value,
+                                    onChanged: (value) {
+                                      Map<String, bool> elementMap = {
+                                        _profileController
+                                            .optionalVaccines[index]
+                                            .entries
+                                            .first
+                                            .key: value!
+                                      };
+                                      _profileController.optionalVaccines
+                                          .removeAt(index);
+                                      _profileController.optionalVaccines
+                                          .insert(index, elementMap);
+                                    },
+                                  );
+                                })),
+                          ],
+                        ),
+                      ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 10),
+                      child: CustomeButton(
+                        buttonText: "Create Profile",
+                        callbackFunction: createNewDogProfle,
+                        backgroundColor: ColorConfig.orange,
+                      ),
+                    )
                   ])))
             ];
           },

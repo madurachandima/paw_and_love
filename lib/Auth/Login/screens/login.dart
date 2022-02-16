@@ -3,9 +3,11 @@ import 'package:get/get.dart';
 import 'package:paw_and_love/Auth/Login/controller/login_controller.dart';
 import 'package:paw_and_love/Auth/Register/Screens/register.dart';
 import 'package:paw_and_love/Config/color_config.dart';
-import 'package:paw_and_love/Config/font_config.dart';
+
+import 'package:paw_and_love/Utils/snackbar.dart';
 import 'package:paw_and_love/Widgets/button.dart';
 import 'package:paw_and_love/Widgets/custome_text_input_field.dart';
+import 'package:sizer/sizer.dart';
 
 class Login extends StatelessWidget {
   const Login({Key? key}) : super(key: key);
@@ -13,103 +15,103 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     LoginControler _loginControler = Get.put(LoginControler());
-    void clickRegisterButton() {
-      debugPrint("call function");
+    void clickRegisterButton() async {
+      String response = await _loginControler.userLogin();
+      if (response != "success") {
+        flutterToastMessage(
+            title: "Error",
+            message: response,
+            position: SnackPosition.TOP,
+            backgroundColor: ColorConfig.errorRed);
+      } else {
+        flutterToastMessage(
+            title: "Success",
+            message: "User registration success",
+            position: SnackPosition.TOP,
+            backgroundColor: ColorConfig.successGreen);
+      }
     }
 
     return Scaffold(
-      backgroundColor: ColorConfig.blueViolet,
+      backgroundColor: ColorConfig.royalBlue,
       body: SafeArea(
           child: SingleChildScrollView(
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height / 1.1,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                child: RichText(
-                    text: const TextSpan(
-                        text: "Welcome \nto ",
-                        style: TextStyle(
-                            fontFamily: REGULAR_FONT,
-                            fontSize: 40,
-                            fontWeight: FontWeight.w500),
-                        children: [
-                      TextSpan(
-                        text: "Paw & Love",
-                        style: TextStyle(color: ColorConfig.yellow),
-                      )
-                    ])),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 10.h),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              child: RichText(
+                  text: TextSpan(
+                      text: "Welcome \nto ",
+                      style: Theme.of(context).textTheme.headline1,
+                      children: [
+                    TextSpan(
+                      text: "Paw & Love",
+                      style: Theme.of(context).textTheme.headline2,
+                    )
+                  ])),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              child: CustomeTextInputField(
+                textEditingController: _loginControler.emailController,
+                isReadOnly: false,
+                isPass: false,
+                lableText: "Email Address ",
+                hintText: " Please Input Email Address",
+                textInputType: TextInputType.emailAddress,
+                textColor: ColorConfig.lightGray,
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                child: CustomeTextInputField(
-                  textEditingController: _loginControler.emailController,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              child: CustomeTextInputField(
+                  textEditingController: _loginControler.passwordController,
                   isReadOnly: false,
-                  isPass: false,
-                  lableText: "Email Address ",
-                  hintText: " Please Input Email Address",
-                  textInputType: TextInputType.emailAddress,
-                  textColor: Colors.white,
+                  isPass: true,
+                  lableText: "Password",
+                  hintText: " Please Input Password",
+                  textInputType: TextInputType.visiblePassword,
+                  textColor: ColorConfig.lightGray),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              child: CustomeButton(
+                buttonText: "Sign in",
+                callbackFunction: clickRegisterButton,
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                SizedBox(
+                    child: Text(
+                  "Don't have a account ? ",
+                  style: Theme.of(context).textTheme.bodyText1,
+                )),
+                const SizedBox(
+                  width: 10,
                 ),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                child: CustomeTextInputField(
-                    textEditingController: _loginControler.passwordController,
-                    isReadOnly: false,
-                    isPass: true,
-                    lableText: "Password",
-                    hintText: " Please Input Password",
-                    textInputType: TextInputType.visiblePassword,
-                    textColor: Colors.white),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                child: CustomeButton(
-                  buttonText: "Sign in",
-                  callbackFunction: clickRegisterButton,
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  const SizedBox(
-                      child: Text(
-                    "Don't have a account ? ",
-                    style: TextStyle(
-                        fontFamily: REGULAR_FONT,
-                        color: Colors.white,
-                        fontSize: 15),
-                  )),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Get.to(() => const Register());
-                    },
-                    child: const Text("Sign up",
-                        style: TextStyle(
-                            fontFamily: REGULAR_FONT,
-                            color: ColorConfig.yellow,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16)),
-                  )
-                ],
-              )
-            ],
-          ),
+                InkWell(
+                  onTap: () {
+                    Get.off(() => const Register());
+                  },
+                  child: Text("Sign up",
+                      style: Theme.of(context).textTheme.bodyText2),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 10.h,
+            )
+          ],
         ),
       )),
     );

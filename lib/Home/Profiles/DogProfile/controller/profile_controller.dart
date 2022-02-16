@@ -15,6 +15,9 @@ class ProfileController extends GetxController {
   VaccinationModel vaccinationModel = VaccinationModel();
   var recommendedVaccines = [].obs;
   var optionalVaccines = [].obs;
+  DateTime? birthdate;
+  int? birthdateByWeeks;
+  String? dogBreed = "";
 
   @override
   void onInit() {
@@ -55,5 +58,22 @@ class ProfileController extends GetxController {
     }
     print(recommendedVaccines);
     print(optionalVaccines);
+  }
+
+  Future<String> saveNewDogprofile() async {
+    String? _dogName = dogNameController.text;
+    String? _dogOwnerName = dogOwnerNameController.text;
+    DateTime? _birthDate = birthdate;
+    int? _ageByWeek = birthdateByWeeks;
+    String? _dogBreed = dogBreed;
+
+    if (_dogName == "") {
+      return "Dog Name is Can't be Empty";
+    } else if (_dogOwnerName == "") {
+      return "Dog Owner Name is Can't be Empty";
+    } else if (_dogBreed == "") {
+      return "Dog Breed Can't be Empty";
+    }
+    return "log";
   }
 }

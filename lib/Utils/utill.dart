@@ -3,11 +3,11 @@ import 'package:flutter/services.dart' show rootBundle;
 
 Future<DateTime?> getDate(BuildContext context) async {
   DateTime? selectedDate = await showDatePicker(
-    context: context,
-    initialDate: DateTime.now(),
-    firstDate: DateTime(2000),
-    lastDate: DateTime(2025),
-  );
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2025),
+      initialEntryMode: DatePickerEntryMode.calendarOnly);
   return selectedDate;
 }
 

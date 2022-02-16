@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:paw_and_love/Config/assets_path.dart';
-import 'package:paw_and_love/Config/color_config.dart';
+
 import 'package:paw_and_love/Config/font_config.dart';
 import 'package:paw_and_love/Home/Profiles/DogProfile/dog_profiles.dart';
 import 'package:paw_and_love/Home/breeders&sellers/breeders_&_sellers.dart';
@@ -14,64 +14,62 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            RichText(
-                text: TextSpan(
-                    text: "What are you looking for, ",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontFamily: REGULAR_FONT,
-                        fontSize: 30.sp,
-                        fontWeight: FontWeight.w500),
-                    children: [
-                  TextSpan(
-                    text: "User\n",
-                    style:
-                        TextStyle(fontSize: 30.sp, color: ColorConfig.yellow),
-                  ),
-                ])),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                cardWidget(
-                    image: profile,
-                    text: "Profile",
-                    context: context,
-                    pageName: const DogProfile()),
-                const Spacer(),
-                cardWidget(
-                    image: disease,
-                    text: "Common Disses",
-                    context: context,
-                    pageName: const CommonDisses())
-              ],
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                cardWidget(
-                    image: breeders,
-                    text: "Breeders & Selllers",
-                    context: context,
-                    pageName: const BreedersAndSellers()),
-                const Spacer(),
-                cardWidget(
-                    image: clinic,
-                    text: "Veterinarian",
-                    context: context,
-                    pageName: const Veterinarian())
-              ],
-            )
-          ]),
-    ));
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 10.h,
+              ),
+              RichText(
+                  text: TextSpan(
+                      text: "What are you looking for, ",
+                      style: Theme.of(context).textTheme.headline3,
+                      children: [
+                    TextSpan(
+                        text: "User",
+                        style: Theme.of(context).textTheme.headline2),
+                  ])),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  cardWidget(
+                      image: profile,
+                      text: "Profile",
+                      context: context,
+                      pageName: const DogProfile()),
+                  const Spacer(),
+                  cardWidget(
+                      image: disease,
+                      text: "Common Disses",
+                      context: context,
+                      pageName: const CommonDisses())
+                ],
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  cardWidget(
+                      image: breeders,
+                      text: "Breeders & Selllers",
+                      context: context,
+                      pageName: const BreedersAndSellers()),
+                  const Spacer(),
+                  cardWidget(
+                      image: clinic,
+                      text: "Veterinarian",
+                      context: context,
+                      pageName: const Veterinarian())
+                ],
+              )
+            ]),
+      ),
+    );
   }
 
   Widget cardWidget(
@@ -106,7 +104,9 @@ class Home extends StatelessWidget {
                 child: Text(
                   text,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 12.sp, fontFamily: REGULAR_FONT),
+                  style: Theme.of(context).textTheme.subtitle1,
+                  maxLines: 2,
+                  overflow: TextOverflow.fade,
                 ),
               )
             ],

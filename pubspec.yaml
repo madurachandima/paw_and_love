@@ -44,6 +44,7 @@ dependencies:
   dropdown_search: ^2.0.1
   syncfusion_flutter_datepicker: ^19.4.48
   sizer: ^2.0.15
+  fluttertoast: ^8.0.8
 
 dev_dependencies:
   flutter_test:

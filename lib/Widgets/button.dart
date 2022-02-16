@@ -3,13 +3,18 @@
 import 'package:flutter/material.dart';
 import 'package:paw_and_love/Config/color_config.dart';
 import 'package:paw_and_love/Config/font_config.dart';
+import 'package:sizer/sizer.dart';
 
 // ignore: must_be_immutable
 class CustomeButton extends StatelessWidget {
   final String buttonText;
+  final Color backgroundColor;
   var callbackFunction;
   CustomeButton(
-      {Key? key, required this.buttonText, required this.callbackFunction})
+      {Key? key,
+      required this.buttonText,
+      this.backgroundColor = ColorConfig.darkBlue,
+      required this.callbackFunction})
       : super(key: key);
 
   @override
@@ -21,20 +26,20 @@ class CustomeButton extends StatelessWidget {
         onPressed: () => callbackFunction(),
         child: Text(
           buttonText.toUpperCase(),
-          style: const TextStyle(
+          style: TextStyle(
               fontFamily: REGULAR_FONT,
-              fontSize: 20,
+              fontSize: 15.sp,
               fontWeight: FontWeight.w400,
               letterSpacing: 4),
         ),
         style: ButtonStyle(
-            foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-            backgroundColor:
-                MaterialStateProperty.all<Color>(ColorConfig.darkBlueButton),
+            //  foregroundColor: MaterialStateProperty.all<Color>(ColorCt),
+            backgroundColor: MaterialStateProperty.all<Color>(backgroundColor),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                    side: const BorderSide(color: Colors.white)))),
+              borderRadius: BorderRadius.circular(20.0),
+              /*   side: const BorderSide(color: Colors.white) */
+            ))),
       ),
     );
   }

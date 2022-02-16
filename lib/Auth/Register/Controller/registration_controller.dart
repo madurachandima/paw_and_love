@@ -55,8 +55,9 @@ class RegistrationController extends GetxController {
         'role': selectedRole.value
       });
       return "success";
+    } on FirebaseAuthException catch (err) {
+      return err.message;
     } catch (e) {
-      debugPrint(e.toString());
       return "Somthing went to wrong";
     }
   }

@@ -16,7 +16,7 @@ class DogProfile extends StatelessWidget {
             return [
               SliverAppBar(
                 elevation: 0,
-                backgroundColor: ColorConfig.darkBlue,
+                /* backgroundColor: ColorConfig.darkBlue, */
                 expandedHeight: 50.h,
                 floating: false,
                 pinned: true,
@@ -49,7 +49,7 @@ class DogProfile extends StatelessWidget {
                         icon: const Icon(
                           CupertinoIcons.add_circled,
                           size: 100,
-                          color: ColorConfig.orange,
+                          color: ColorConfig.yellow,
                         )),
                   ),
                 )

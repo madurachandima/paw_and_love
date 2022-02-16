@@ -4,10 +4,11 @@ import 'package:group_radio_button/group_radio_button.dart';
 import 'package:paw_and_love/Auth/Login/screens/login.dart';
 import 'package:paw_and_love/Auth/Register/Controller/registration_controller.dart';
 import 'package:paw_and_love/Config/color_config.dart';
-import 'package:paw_and_love/Config/font_config.dart';
+import 'package:paw_and_love/Home/bottom_navigationbar_handler.dart';
 import 'package:paw_and_love/Utils/snackbar.dart';
 import 'package:paw_and_love/Widgets/button.dart';
 import 'package:paw_and_love/Widgets/custome_text_input_field.dart';
+import 'package:sizer/sizer.dart';
 
 class Register extends StatelessWidget {
   const Register({Key? key}) : super(key: key);
@@ -17,44 +18,44 @@ class Register extends StatelessWidget {
     RegistrationController _registrationController =
         Get.put(RegistrationController());
     void clickRegisterButton() async {
-      debugPrint("call register function");
       String response = await _registrationController.userRegistration();
       if (response != "success") {
-        showSnackbar(
+        Get.off(() => const BottomNavigationbarHandler());
+        flutterToastMessage(
             title: "Error",
             message: response,
             position: SnackPosition.TOP,
-            backgroundColor: Colors.transparent);
+            backgroundColor: ColorConfig.errorRed);
       } else {
-        showSnackbar(
+        flutterToastMessage(
             title: "Success",
             message: "User registration success",
             position: SnackPosition.TOP,
-            backgroundColor: Colors.transparent);
+            backgroundColor: ColorConfig.successGreen);
       }
     }
 
     return Scaffold(
-      backgroundColor: ColorConfig.blueViolet,
+      backgroundColor: ColorConfig.royalBlue,
       body: SafeArea(
           child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(
+              height: 10.h,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
               child: RichText(
-                  text: const TextSpan(
+                  text: TextSpan(
                       text: "Welcome \nto ",
-                      style: TextStyle(
-                          fontFamily: REGULAR_FONT,
-                          fontSize: 40,
-                          fontWeight: FontWeight.w500),
+                      style: Theme.of(context).textTheme.headline1,
                       children: [
                     TextSpan(
                       text: "Paw & Love",
-                      style: TextStyle(color: ColorConfig.yellow),
+                      style: Theme.of(context).textTheme.headline2,
                     )
                   ])),
             ),
@@ -71,7 +72,7 @@ class Register extends StatelessWidget {
                   lableText: "Username",
                   hintText: " Please Input Username",
                   textInputType: TextInputType.text,
-                  textColor: Colors.white),
+                  textColor: ColorConfig.lightGray),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -113,7 +114,7 @@ class Register extends StatelessWidget {
                   horizontalAlignment: MainAxisAlignment.spaceEvenly,
                   direction: Axis.horizontal,
                   textStyle: const TextStyle(
-                    color: Colors.white,
+                    color: ColorConfig.lightGray,
                   ),
                   activeColor: ColorConfig.darkBlue,
                   groupValue: _registrationController.selectedRole.value,
@@ -135,29 +136,25 @@ class Register extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
-                const SizedBox(
+                SizedBox(
                     child: Text(
                   "Already have a account ? ",
-                  style: TextStyle(
-                      fontFamily: REGULAR_FONT,
-                      color: Colors.white,
-                      fontSize: 15),
+                  style: Theme.of(context).textTheme.bodyText1,
                 )),
                 const SizedBox(
                   width: 10,
                 ),
                 InkWell(
                   onTap: () {
-                    Get.to(() => const Login());
+                    Get.off(() => const Login());
                   },
-                  child: const Text("Sign In",
-                      style: TextStyle(
-                          fontFamily: REGULAR_FONT,
-                          color: ColorConfig.yellow,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16)),
+                  child: Text("Sign In",
+                      style: Theme.of(context).textTheme.bodyText2),
                 )
               ],
+            ),
+            SizedBox(
+              height: 10.h,
             )
           ],
         ),
