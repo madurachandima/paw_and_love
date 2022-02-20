@@ -45,6 +45,7 @@ dependencies:
   syncfusion_flutter_datepicker: ^19.4.48
   sizer: ^2.0.15
   fluttertoast: ^8.0.8
+  image_picker: ^0.8.4+9
 
 dev_dependencies:
   flutter_test:

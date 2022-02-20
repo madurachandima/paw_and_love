@@ -33,28 +33,25 @@ class DogProfile extends StatelessWidget {
               ),
             ];
           },
-          body: Container(
-            color: CupertinoColors.lightBackgroundGray,
-            child: Wrap(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SizedBox(
-                    height: 20.h,
-                    width: 25.w,
-                    child: IconButton(
-                        onPressed: () {
-                          Get.to(() => const AddNewDogProfile());
-                        },
-                        icon: const Icon(
-                          CupertinoIcons.add_circled,
-                          size: 100,
-                          color: ColorConfig.yellow,
-                        )),
-                  ),
-                )
-              ],
-            ),
+          body: Wrap(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  height: 20.h,
+                  width: 25.w,
+                  child: IconButton(
+                      onPressed: () {
+                        Get.to(() => const AddNewDogProfile());
+                      },
+                      icon: const Icon(
+                        CupertinoIcons.add_circled,
+                        size: 100,
+                        color: ColorConfig.yellow,
+                      )),
+                ),
+              )
+            ],
           )),
     );
   }

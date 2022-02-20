@@ -1,5 +1,8 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:image_picker/image_picker.dart';
 
 Future<DateTime?> getDate(BuildContext context) async {
   DateTime? selectedDate = await showDatePicker(
@@ -30,4 +33,15 @@ getDaysByWeeks(int days) {
 Future readjsonFile({required String path}) async {
   var jsonText = await rootBundle.loadString(path);
   return jsonText;
+}
+
+pickImage(ImageSource source) async {
+  final ImagePicker _imagePicker = ImagePicker();
+  XFile? _file = await _imagePicker.pickImage(source: source);
+
+  if (_file != null) {
+    Uint8List a = await _file.readAsBytes();
+
+    return [a, _file.path];
+  }
 }

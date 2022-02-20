@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:paw_and_love/Config/assets_path.dart';
 
 import 'package:paw_and_love/Config/font_config.dart';
+import 'package:paw_and_love/Home/HomeScreen/controller/home_controller.dart';
 import 'package:paw_and_love/Home/Profiles/DogProfile/dog_profiles.dart';
 import 'package:paw_and_love/Home/breeders&sellers/breeders_&_sellers.dart';
 import 'package:paw_and_love/Home/commonDisses/common_disses.dart';
@@ -14,6 +15,7 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final HomeController _controller = Get.put(HomeController());
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -24,15 +26,15 @@ class Home extends StatelessWidget {
               SizedBox(
                 height: 10.h,
               ),
-              RichText(
-                  text: TextSpan(
-                      text: "What are you looking for, ",
-                      style: Theme.of(context).textTheme.headline3,
-                      children: [
-                    TextSpan(
-                        text: "User",
-                        style: Theme.of(context).textTheme.headline2),
-                  ])),
+              Obx(() => RichText(
+                      text: TextSpan(
+                          text: "What are you looking for, ",
+                          style: Theme.of(context).textTheme.headline3,
+                          children: [
+                        TextSpan(
+                            text: _controller.userName.value,
+                            style: Theme.of(context).textTheme.headline2),
+                      ]))),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,

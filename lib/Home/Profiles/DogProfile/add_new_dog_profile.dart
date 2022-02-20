@@ -1,13 +1,17 @@
 import 'dart:collection';
+import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:dropdown_search/dropdown_search.dart';
 
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:paw_and_love/Config/color_config.dart';
 import 'package:paw_and_love/Config/font_config.dart';
 import 'package:paw_and_love/Home/Profiles/DogProfile/controller/profile_controller.dart';
+import 'package:paw_and_love/Home/Profiles/DogProfile/dog_profiles.dart';
 import 'package:paw_and_love/Utils/const.dart';
 import 'package:paw_and_love/Utils/snackbar.dart';
 import 'package:paw_and_love/Utils/styles.dart';
@@ -22,8 +26,32 @@ class AddNewDogProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ProfileController _profileController = Get.put(ProfileController());
+
     createNewDogProfle() async {
-      await _profileController.saveNewDogprofile();
+      var result = await _profileController.saveNewDogprofile();
+
+      if (result != "success") {
+        flutterToastMessage(
+            title: "Error",
+            message: result.toString(),
+            position: SnackPosition.TOP,
+            backgroundColor: ColorConfig.errorRed);
+      } else {
+        flutterToastMessage(
+            title: "Success",
+            message: "Dog profile is created",
+            position: SnackPosition.TOP,
+            backgroundColor: ColorConfig.successGreen);
+        Get.off(() => const DogProfile());
+      }
+    }
+
+    void selectImage() async {
+      // debugPrint("dddddddddddd");
+      var list = await pickImage(ImageSource.gallery);
+      print(list[1]);
+      _profileController.profileImage.value = list[1].toString();
+      // _profileController.profileImage.value
     }
 
     return Scaffold(
@@ -40,30 +68,42 @@ class AddNewDogProfile extends StatelessWidget {
                   title: const Text(
                     "Add New Profile",
                   ),
-                  background: Stack(
-                    alignment: Alignment.center,
-                    fit: StackFit.expand,
-                    children: [
-                      Image.network(
-                        "https://images.unsplash.com/photo-1552053831-71594a27632d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=362&q=80",
-                        fit: BoxFit.cover,
-                      ),
-                      Positioned(
-                          height: 8.h,
-                          width: 8.w,
-                          bottom: 10,
-                          left: 80.w,
-                          child: IconButton(
-                              onPressed: () {
-                                debugPrint("Click");
-                              },
-                              icon: const Icon(
-                                Icons.add_a_photo_outlined,
-                                color: Colors.black54,
-                                size: 50,
-                              )))
-                    ],
-                  ),
+                  background: Obx(() => Stack(
+                        alignment: Alignment.center,
+                        fit: StackFit.expand,
+                        children: [
+                          _profileController.profileImage.isEmpty
+                              ? Image.network(
+                                  "https://images.unsplash.com/photo-1552053831-71594a27632d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=362&q=80",
+                                  fit: BoxFit.cover,
+                                )
+                              : Image.file(
+                                  File(_profileController.profileImage.value),
+                                  fit: BoxFit.cover,
+                                ),
+                          Positioned(
+                              bottom: 10,
+                              left: 80.w,
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.black26,
+                                  shape: BoxShape.circle,
+                                ),
+                                height: 8.h,
+                                width: 15.w,
+                                child: InkWell(
+                                  onTap: () {
+                                    selectImage();
+                                  },
+                                  child: const Icon(
+                                    Icons.add_a_photo_outlined,
+                                    color: Co,
+                                    size: 50,
+                                  ),
+                                ),
+                              ))
+                        ],
+                      )),
                 ),
               ),
               Obx(() => SliverList(
@@ -191,10 +231,19 @@ class AddNewDogProfile extends StatelessWidget {
                                       message: "Invalid Birthdate",
                                       position: SnackPosition.TOP,
                                       backgroundColor: ColorConfig.errorRed);
+
+                                  _profileController.clearBirthdates();
                                 }
                               } else {
                                 _profileController
                                     .dogBirthDateController.value.text = "";
+                                flutterToastMessage(
+                                    title: "Error",
+                                    message: "Dog Birthdate can't be empty",
+                                    position: SnackPosition.TOP,
+                                    backgroundColor: ColorConfig.errorRed);
+
+                                _profileController.clearBirthdates();
                               }
                             } else {
                               flutterToastMessage(
@@ -202,6 +251,8 @@ class AddNewDogProfile extends StatelessWidget {
                                   message: "Invalid Birthdate",
                                   position: SnackPosition.TOP,
                                   backgroundColor: ColorConfig.errorRed);
+
+                              _profileController.clearBirthdates();
                             }
                           },
                           isReadOnly: true,
