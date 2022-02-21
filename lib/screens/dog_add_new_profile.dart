@@ -1,8 +1,7 @@
-import 'dart:collection';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 
@@ -10,12 +9,12 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:paw_and_love/Config/color_config.dart';
 import 'package:paw_and_love/Config/font_config.dart';
-import 'package:paw_and_love/Home/Profiles/DogProfile/controller/profile_controller.dart';
-import 'package:paw_and_love/Home/Profiles/DogProfile/dog_profiles.dart';
 import 'package:paw_and_love/Utils/const.dart';
 import 'package:paw_and_love/Utils/snackbar.dart';
 import 'package:paw_and_love/Utils/styles.dart';
-import 'package:paw_and_love/Widgets/button.dart';
+import 'package:paw_and_love/Widgets/custome_button.dart';
+import 'package:paw_and_love/controller/profile_controller.dart';
+import 'package:paw_and_love/screens/dog_profiles.dart';
 import 'package:sizer/sizer.dart';
 import 'package:paw_and_love/Utils/utill.dart';
 import 'package:paw_and_love/Widgets/custome_text_input_field.dart';
@@ -28,6 +27,7 @@ class AddNewDogProfile extends StatelessWidget {
     ProfileController _profileController = Get.put(ProfileController());
 
     createNewDogProfle() async {
+      _profileController.isUploading.value = true;
       var result = await _profileController.saveNewDogprofile();
 
       if (result != "success") {
@@ -36,6 +36,7 @@ class AddNewDogProfile extends StatelessWidget {
             message: result.toString(),
             position: SnackPosition.TOP,
             backgroundColor: ColorConfig.errorRed);
+        _profileController.isUploading.value = false;
       } else {
         flutterToastMessage(
             title: "Success",
@@ -43,15 +44,16 @@ class AddNewDogProfile extends StatelessWidget {
             position: SnackPosition.TOP,
             backgroundColor: ColorConfig.successGreen);
         Get.off(() => const DogProfile());
+        _profileController.isUploading.value = false;
       }
     }
 
     void selectImage() async {
-      // debugPrint("dddddddddddd");
       var list = await pickImage(ImageSource.gallery);
-      print(list[1]);
-      _profileController.profileImage.value = list[1].toString();
-      // _profileController.profileImage.value
+      if (list != null) {
+        _profileController.profileImage.value = list[1].toString();
+        _profileController.profileImageByte = list[0];
+      }
     }
 
     return Scaffold(
@@ -82,26 +84,19 @@ class AddNewDogProfile extends StatelessWidget {
                                   fit: BoxFit.cover,
                                 ),
                           Positioned(
-                              bottom: 10,
-                              left: 80.w,
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                  color: Colors.black26,
-                                  shape: BoxShape.circle,
-                                ),
-                                height: 8.h,
-                                width: 15.w,
-                                child: InkWell(
-                                  onTap: () {
-                                    selectImage();
-                                  },
-                                  child: const Icon(
-                                    Icons.add_a_photo_outlined,
-                                    color: Co,
-                                    size: 50,
-                                  ),
-                                ),
-                              ))
+                            bottom: 10,
+                            left: 80.w,
+                            child: InkWell(
+                              onTap: () {
+                                selectImage();
+                              },
+                              child: const Icon(
+                                CupertinoIcons.camera_circle,
+                                color: Colors.white60,
+                                size: 50,
+                              ),
+                            ),
+                          )
                         ],
                       )),
                 ),
@@ -428,8 +423,11 @@ class AddNewDogProfile extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 10),
                       child: CustomeButton(
+                        getxController: _profileController,
                         buttonText: "Create Profile",
-                        callbackFunction: createNewDogProfle,
+                        callbackFunction: _profileController.isUploading.value
+                            ? null
+                            : createNewDogProfle,
                         backgroundColor: ColorConfig.orange,
                       ),
                     )

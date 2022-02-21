@@ -3,11 +3,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:paw_and_love/Auth/Login/screens/login.dart';
+import 'package:paw_and_love/screens/bottom_navigationbar_handler.dart';
+import 'package:paw_and_love/screens/login.dart';
 import 'package:paw_and_love/Config/color_config.dart';
 import 'package:paw_and_love/Config/font_config.dart';
-import 'package:paw_and_love/Home/bottom_navigationbar_handler.dart';
 import 'package:paw_and_love/Widgets/customeCircularProgress.dart';
+
 import 'package:sizer/sizer.dart';
 
 void main() async {
@@ -45,45 +46,45 @@ class MyApp extends StatelessWidget {
               fontFamily: REGULAR_FONT,
               textTheme: TextTheme(
                 /*
-                  *for main heding
-                  */
+                    *for main heding
+                    */
                 headline1: TextStyle(
                     fontSize: 35.sp,
                     fontWeight: FontWeight.w500,
                     color: ColorConfig.lightGray),
                 /*
-                  *for main heding highlight text
-                  */
+                    *for main heding highlight text
+                    */
                 headline2: TextStyle(
                     fontSize: 38.sp,
                     fontWeight: FontWeight.w500,
                     color: ColorConfig.yellow),
                 /*
-                  *for main heding  text inside
-                  */
+                    *for main heding  text inside
+                    */
                 headline3: TextStyle(
                     fontSize: 38.sp,
                     fontWeight: FontWeight.w500,
                     color: ColorConfig.blue),
                 /*
-                  *for body text dark
-                  */
+                    *for body text dark
+                    */
                 bodyText1: TextStyle(
                     fontSize: 15.sp,
                     fontWeight: FontWeight.w500,
                     color: ColorConfig.textColorGray),
 
                 /*
-                  *for body text light
-                  */
+                    *for body text light
+                    */
                 bodyText2: TextStyle(
                     fontSize: 15.sp,
                     fontWeight: FontWeight.w500,
                     color: ColorConfig.yellow),
 
                 /*
-                  *for body text subtitle
-                  */
+                    *for body text subtitle
+                    */
                 subtitle1: TextStyle(
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w500,
@@ -104,7 +105,7 @@ class MyApp extends StatelessWidget {
                   }
                 }
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CustomeCircularProgress();
+                  return CustomeCircularProgress();
                 }
 
                 return const Login();

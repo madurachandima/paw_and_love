@@ -1,9 +1,8 @@
 import 'dart:collection';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:paw_and_love/Services/dog_profile_methods.dart';
 import 'package:paw_and_love/Utils/utill.dart';
 import 'package:paw_and_love/model/vaccination_model.dart';
 
@@ -12,18 +11,19 @@ enum DogGender { male, female }
 class ProfileController extends GetxController {
   TextEditingController dogNameController = TextEditingController();
   TextEditingController dogOwnerNameController = TextEditingController();
-
-  var dogBirthDateController = TextEditingController().obs;
-  var gender = DogGender.male.obs;
   VaccinationModel vaccinationModel = VaccinationModel();
-  var recommendedVaccines = [].obs;
-  var optionalVaccines = [].obs;
   DateTime? birthdate;
   int? birthdateByWeeks;
   String? dogBreed = "";
-  var profileImage = "".obs;
+  Uint8List? profileImageByte;
 
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  var recommendedVaccines = [].obs;
+  var optionalVaccines = [].obs;
+  var profileImage = "".obs;
+  var dogBirthDateController = TextEditingController().obs;
+  var gender = DogGender.male.obs;
+  var isUploading = false.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -66,48 +66,17 @@ class ProfileController extends GetxController {
   }
 
   Future<String?> saveNewDogprofile() async {
-    String? _dogName = dogNameController.text;
-    String? _dogOwnerName = dogOwnerNameController.text;
-    DateTime? _birthDate = birthdate;
-    int? _ageByWeek = birthdateByWeeks;
-    String? _dogBreed = dogBreed;
-
-    debugPrint(birthdateByWeeks.toString());
-    if (_dogName == "") {
-      return "Dog Name is Can't be Empty";
-    } else if (_dogOwnerName == "") {
-      return "Dog Owner Name is Can't be Empty";
-    } else if (_dogBreed == "") {
-      return "Dog Breed Can't be Empty";
-    } else if (_ageByWeek == 0) {
-      return "Invalid birthdate";
-    } else if (_ageByWeek == null) {
-      return "Dog birthdate can't be empty";
-    }
-
-    try {
-      await _firestore
-          .collection('users')
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .collection("dog_profiles")
-          .doc()
-          .set({
-        'dog_name': _dogName,
-        'owner_name': _dogOwnerName,
-        'dog_breed': _dogBreed,
-        'dog_profile_url': "",
-        'dog_birhdate': _birthDate,
-        'dog_gender': gender.value.name,
-        'recomonded_vaccine': recommendedVaccines,
-        'optional_vaccine': optionalVaccines
-      });
-    } on FirebaseException catch (err) {
-      return err.message;
-    } catch (e) {
-      return "Somthing is wrong";
-    }
-    clearTextFields();
-    return "success";
+    return await DogProfileMethod().saveNewDogprofile(
+        dogName: dogNameController.text,
+        dogOwnerName: dogOwnerNameController.text,
+        birthDate: birthdate,
+        ageByWeek: birthdateByWeeks,
+        dogBreed: dogBreed,
+        profileImageByte: profileImageByte,
+        gender: gender.value.name,
+        recommendedVaccines: recommendedVaccines,
+        optionalVaccines: optionalVaccines,
+        callback: clearTextFields);
   }
 
   clearBirthdates() {

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:paw_and_love/Config/assets_path.dart';
 
-import 'package:paw_and_love/Config/font_config.dart';
-import 'package:paw_and_love/Home/HomeScreen/controller/home_controller.dart';
-import 'package:paw_and_love/Home/Profiles/DogProfile/dog_profiles.dart';
-import 'package:paw_and_love/Home/breeders&sellers/breeders_&_sellers.dart';
-import 'package:paw_and_love/Home/commonDisses/common_disses.dart';
-import 'package:paw_and_love/Home/veterinarian/veterinarian.dart';
+import 'package:paw_and_love/controller/home_controller.dart';
+import 'package:paw_and_love/screens/common_disses.dart';
+import 'package:paw_and_love/screens/dog_profiles.dart';
+import 'package:paw_and_love/screens/breeders_&_sellers.dart';
+import 'package:paw_and_love/screens/veterinarian.dart';
+
 import 'package:sizer/sizer.dart';
 
 class Home extends StatelessWidget {
