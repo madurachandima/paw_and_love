@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DogProfileModel {
@@ -20,6 +22,22 @@ class DogProfileModel {
       required this.recommendedVaccines,
       required this.optionalVaccines});
 
+  returnJsonArray(array) {
+    var tempRecomndednArray = [];
+    Map tempMap = HashMap();
+    for (var item in array!) {
+      tempMap = {
+        item.entries.first.key: VaccinactionDateModel(
+                vaccinatedDate: item.entries.first.value.vaccinatedDate,
+                isVaccinated: item.entries.first.value.isVaccinated)
+            .toJson()
+      };
+
+      tempRecomndednArray.add(tempMap);
+    }
+    return tempRecomndednArray;
+  }
+
   Map<String, dynamic> toJson() => {
         'dog_name': dogName,
         'owner_name': dogOwnerName,
@@ -27,8 +45,8 @@ class DogProfileModel {
         'dog_profile_url': dogProfileUrl,
         'dog_birthdate': birthDate,
         'dog_gender': dogGender,
-        'recomonded_vaccine': recommendedVaccines,
-        'optional_vaccine': optionalVaccines
+        'recomonded_vaccine': returnJsonArray(recommendedVaccines),
+        'optional_vaccine': returnJsonArray(optionalVaccines)
       };
 
   static DogProfileModel fromSnap(DocumentSnapshot? snap) {
@@ -44,4 +62,17 @@ class DogProfileModel {
         recommendedVaccines: snapshot['recomonded_vaccine'],
         optionalVaccines: snapshot['optional_vaccine']);
   }
+}
+
+class VaccinactionDateModel {
+  DateTime? vaccinatedDate;
+  bool? isVaccinated;
+
+  VaccinactionDateModel(
+      {required this.vaccinatedDate, required this.isVaccinated});
+
+  Map<String, dynamic> toJson() => {
+        'dateTime': vaccinatedDate,
+        'isVaccinated': isVaccinated,
+      };
 }

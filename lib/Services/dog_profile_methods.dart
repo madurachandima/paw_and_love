@@ -46,6 +46,7 @@ class DogProfileMethod {
           dogGender: gender,
           recommendedVaccines: recommendedVaccines,
           optionalVaccines: optionalVaccines);
+
       await _firestore
           .collection('users')
           .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -53,8 +54,10 @@ class DogProfileMethod {
           .doc()
           .set(dogProfileModel.toJson());
     } on FirebaseException catch (err) {
+      // print(err.message);
       return err.message;
     } catch (e) {
+      print(e);
       return "Somthing is wrong";
     }
     callback();

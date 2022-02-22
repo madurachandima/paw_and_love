@@ -14,6 +14,7 @@ import 'package:paw_and_love/Utils/snackbar.dart';
 import 'package:paw_and_love/Utils/styles.dart';
 import 'package:paw_and_love/Widgets/custome_button.dart';
 import 'package:paw_and_love/controller/profile_controller.dart';
+import 'package:paw_and_love/model/dog_profile_model.dart';
 import 'package:paw_and_love/screens/dog_profiles.dart';
 import 'package:sizer/sizer.dart';
 import 'package:paw_and_love/Utils/utill.dart';
@@ -356,19 +357,36 @@ class AddNewDogProfile extends StatelessWidget {
                                         .recommendedVaccines[index]
                                         .entries
                                         .first
-                                        .value,
-                                    onChanged: (value) {
-                                      Map<String, bool> elementMap = {
-                                        _profileController
-                                            .recommendedVaccines[index]
-                                            .entries
-                                            .first
-                                            .key: value!
-                                      };
-                                      _profileController.recommendedVaccines
-                                          .removeAt(index);
-                                      _profileController.recommendedVaccines
-                                          .insert(index, elementMap);
+                                        .value
+                                        .isVaccinated,
+                                    onChanged: (value) async {
+                                      DateTime? dateTime = DateTime.now();
+                                      if (value!) {
+                                        dateTime = await getDate(context);
+                                      }
+                                      if (dateTime!.isAfter(DateTime.now())) {
+                                        flutterToastMessage(
+                                            title: "Error",
+                                            message: "Invalid Vaccinated Date",
+                                            position: SnackPosition.TOP,
+                                            backgroundColor:
+                                                ColorConfig.errorRed);
+                                      } else {
+                                        Map<String, dynamic> elementMap = {
+                                          _profileController
+                                                  .recommendedVaccines[index]
+                                                  .entries
+                                                  .first
+                                                  .key:
+                                              VaccinactionDateModel(
+                                                  vaccinatedDate: dateTime,
+                                                  isVaccinated: value)
+                                        };
+                                        _profileController.recommendedVaccines
+                                            .removeAt(index);
+                                        _profileController.recommendedVaccines
+                                            .insert(index, elementMap);
+                                      }
                                     },
                                   );
                                 })),
@@ -400,19 +418,37 @@ class AddNewDogProfile extends StatelessWidget {
                                         .optionalVaccines[index]
                                         .entries
                                         .first
-                                        .value,
-                                    onChanged: (value) {
-                                      Map<String, bool> elementMap = {
-                                        _profileController
-                                            .optionalVaccines[index]
-                                            .entries
-                                            .first
-                                            .key: value!
-                                      };
-                                      _profileController.optionalVaccines
-                                          .removeAt(index);
-                                      _profileController.optionalVaccines
-                                          .insert(index, elementMap);
+                                        .value
+                                        .isVaccinated,
+                                    onChanged: (value) async {
+                                      DateTime? dateTime;
+                                      if (value!) {
+                                        dateTime = await getDate(context);
+                                      }
+                                      if (dateTime!.isAfter(DateTime.now())) {
+                                        flutterToastMessage(
+                                            title: "Error",
+                                            message: "Invalid Vaccinated Date",
+                                            position: SnackPosition.TOP,
+                                            backgroundColor:
+                                                ColorConfig.errorRed);
+                                      } else {
+                                        Map<String, dynamic> elementMap = {
+                                          _profileController
+                                                  .optionalVaccines[index]
+                                                  .entries
+                                                  .first
+                                                  .key:
+                                              VaccinactionDateModel(
+                                                  vaccinatedDate: dateTime,
+                                                  isVaccinated: value)
+                                        };
+                                        _profileController.optionalVaccines
+                                            .removeAt(index);
+
+                                        _profileController.optionalVaccines
+                                            .insert(index, elementMap);
+                                      }
                                     },
                                   );
                                 })),

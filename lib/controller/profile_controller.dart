@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:paw_and_love/Services/dog_profile_methods.dart';
 import 'package:paw_and_love/Utils/utill.dart';
+import 'package:paw_and_love/model/dog_profile_model.dart';
 import 'package:paw_and_love/model/vaccination_model.dart';
 
 enum DogGender { male, female }
@@ -46,14 +47,20 @@ class ProfileController extends GetxController {
         recommendedVaccines.clear();
         optionalVaccines.clear();
         for (var i = 0; i < values.last.optional!.length; i++) {
-          Map<String, bool> optionalMap = HashMap();
+          Map<String, VaccinactionDateModel> optionalMap = HashMap();
           //optionalMap.entries.first.key
-          optionalMap.assign(values.last.optional![i], false);
+          optionalMap.assign(
+              values.last.optional![i],
+              VaccinactionDateModel(
+                  vaccinatedDate: DateTime.now(), isVaccinated: false));
           optionalVaccines.add(optionalMap);
         }
         for (var i = 0; i < values.first.recommended!.length; i++) {
-          Map<String, bool> recomendedMap = HashMap();
-          recomendedMap.assign(values.first.recommended![i], false);
+          Map<String, VaccinactionDateModel> recomendedMap = HashMap();
+          recomendedMap.assign(
+              values.first.recommended![i],
+              VaccinactionDateModel(
+                  vaccinatedDate: DateTime.now(), isVaccinated: false));
           recommendedVaccines.add(recomendedMap);
         }
       }

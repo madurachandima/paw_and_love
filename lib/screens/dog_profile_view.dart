@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:paw_and_love/Config/color_config.dart';
+import 'package:paw_and_love/Utils/utill.dart';
 import 'package:sizer/sizer.dart';
 import 'package:paw_and_love/Widgets/custome_text_input_field.dart';
 
@@ -11,6 +12,13 @@ class ViewDogProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    convertTimestampDate(date) {
+      return daysBetween(
+          DateTime.parse(DateFormat("yyyy-MM-dd")
+              .format(DateTime.parse(date.toDate().toString()))),
+          DateTime.now());
+    }
+
     return Scaffold(
       body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
@@ -104,6 +112,187 @@ class ViewDogProfile extends StatelessWidget {
                       textInputType: TextInputType.text,
                       textColor: ColorConfig.orange),
                 ),
+                const Padding(
+                  padding:
+                      EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 5),
+                  child: Text(
+                    "Dog Age by Weeks",
+                    style: TextStyle(color: ColorConfig.orange),
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+                  child: CustomeTextInputField(
+                      isReadOnly: true,
+                      textEditingController: TextEditingController(
+                          text: convertTimestampDate(snap['dog_birthdate'])
+                              .toString()),
+                      isPass: false,
+                      hintText: "Dog Owner Name",
+                      lableText: "Please Enter Dog Owner Name",
+                      textInputType: TextInputType.text,
+                      textColor: ColorConfig.orange),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(
+                        left: 20,
+                        right: 20,
+                        top: 20,
+                      ),
+                      child: Text(
+                        "Dog Vaccination Details",
+                        style: TextStyle(color: ColorConfig.orange),
+                      ),
+                    ),
+                    const Divider(
+                      height: 2,
+                      color: ColorConfig.orange,
+                    ),
+                    if (snap['recomonded_vaccine'].length > 0)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 20,
+                              right: 20,
+                              top: 20,
+                            ),
+                            child: Text(
+                              "Recomonded Vaccination Details",
+                              style: TextStyle(
+                                  color: ColorConfig.orange, fontSize: 14.sp),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 20, right: 20, bottom: 10),
+                            child: ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: snap['recomonded_vaccine'].length,
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  return snap['recomonded_vaccine'][index]
+                                          .entries
+                                          .first
+                                          .value['isVaccinated']
+                                      ? Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Flexible(
+                                              flex: 5,
+                                              fit: FlexFit.tight,
+                                              child: Text(
+                                                  snap['recomonded_vaccine']
+                                                          [index]
+                                                      .entries
+                                                      .first
+                                                      .key
+                                                      .toString(),
+                                                  style: const TextStyle(
+                                                      color:
+                                                          ColorConfig.orange)),
+                                            ),
+                                            const Spacer(),
+                                            Flexible(
+                                                flex: 5,
+                                                fit: FlexFit.tight,
+                                                child: Text(
+                                                    DateFormat.yMMMd()
+                                                        .format(
+                                                            snap['recomonded_vaccine']
+                                                                    [index]
+                                                                .entries
+                                                                .first
+                                                                .value[
+                                                                    'dateTime']
+                                                                .toDate())
+                                                        .toString(),
+                                                    style: const TextStyle(
+                                                        color: ColorConfig
+                                                            .orange)))
+                                          ],
+                                        )
+                                      : Container();
+                                }),
+                          ),
+                        ],
+                      ),
+                    if (snap['optional_vaccine'].length > 0)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 20,
+                              right: 20,
+                              top: 20,
+                            ),
+                            child: Text(
+                              "Optional Vaccination Details",
+                              style: TextStyle(
+                                  color: ColorConfig.orange, fontSize: 14.sp),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 20, right: 20, bottom: 10),
+                            child: ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: snap['optional_vaccine'].length,
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  return snap['optional_vaccine'][index]
+                                          .entries
+                                          .first
+                                          .value['isVaccinated']
+                                      ? Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Flexible(
+                                                flex: 5,
+                                                fit: FlexFit.tight,
+                                                child: Text(
+                                                    snap['optional_vaccine']
+                                                            [index]
+                                                        .entries
+                                                        .first
+                                                        .key
+                                                        .toString(),
+                                                    style: const TextStyle(
+                                                        color: ColorConfig
+                                                            .orange))),
+                                            const Spacer(),
+                                            Flexible(
+                                                flex: 5,
+                                                fit: FlexFit.tight,
+                                                child: Text(
+                                                    DateFormat.yMMMd()
+                                                        .format(
+                                                            snap['optional_vaccine']
+                                                                    [index]
+                                                                .entries
+                                                                .first
+                                                                .value[
+                                                                    'dateTime']
+                                                                .toDate())
+                                                        .toString(),
+                                                    style: const TextStyle(
+                                                        color: ColorConfig
+                                                            .orange)))
+                                          ],
+                                        )
+                                      : Container();
+                                }),
+                          ),
+                        ],
+                      ),
+                  ],
+                )
               ]))
             ];
           },
