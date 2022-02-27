@@ -6,6 +6,7 @@ class LoginControler extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  var isUploading = false.obs;
 
   @override
   void dispose() {

@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
                 headline2: TextStyle(
                     fontSize: 38.sp,
                     fontWeight: FontWeight.w500,
-                    color: ColorConfig.yellow),
+                    color: ColorConfig.orange),
                 /*
                     *for main heding  text inside
                     */
@@ -88,7 +88,7 @@ class MyApp extends StatelessWidget {
                 subtitle1: TextStyle(
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w500,
-                    color: ColorConfig.yellow),
+                    color: ColorConfig.orange),
               ),
               appBarTheme:
                   const AppBarTheme(backgroundColor: ColorConfig.blue)),

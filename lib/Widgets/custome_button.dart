@@ -18,7 +18,7 @@ class CustomeButton extends StatelessWidget {
       {Key? key,
       required this.buttonText,
       this.backgroundColor = ColorConfig.darkBlue,
-      this.getxController,
+      required this.getxController,
       required this.callbackFunction})
       : super(key: key);
 

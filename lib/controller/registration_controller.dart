@@ -15,6 +15,7 @@ class RegistrationController extends GetxController {
 
   var roletypes = ["User", "Vet", "Seller"];
   var selectedRole = "".obs;
+  var isUploading = false.obs;
 
   @override
   void dispose() {

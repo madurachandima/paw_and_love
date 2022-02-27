@@ -17,6 +17,7 @@ class Login extends StatelessWidget {
   Widget build(BuildContext context) {
     LoginControler _loginControler = Get.put(LoginControler());
     void clickRegisterButton() async {
+      _loginControler.isUploading.value = true;
       String response = await _loginControler.userLogin();
       if (response != "success") {
         flutterToastMessage(
@@ -24,12 +25,14 @@ class Login extends StatelessWidget {
             message: response,
             position: SnackPosition.TOP,
             backgroundColor: ColorConfig.errorRed);
+        _loginControler.isUploading.value = false;
       } else {
         flutterToastMessage(
             title: "Success",
             message: "User login success",
             position: SnackPosition.TOP,
             backgroundColor: ColorConfig.successGreen);
+        _loginControler.isUploading.value = false;
         Get.off(() => const BottomNavigationbarHandler());
       }
     }
@@ -85,6 +88,7 @@ class Login extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
               child: CustomeButton(
+                getxController: _loginControler,
                 buttonText: "Sign in",
                 callbackFunction: clickRegisterButton,
               ),

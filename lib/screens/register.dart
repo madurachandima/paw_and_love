@@ -19,6 +19,7 @@ class Register extends StatelessWidget {
     RegistrationController _registrationController =
         Get.put(RegistrationController());
     void clickRegisterButton() async {
+      _registrationController.isUploading.value = true;
       String response = await _registrationController.userRegistration();
       if (response != "success") {
         flutterToastMessage(
@@ -26,12 +27,14 @@ class Register extends StatelessWidget {
             message: response,
             position: SnackPosition.TOP,
             backgroundColor: ColorConfig.errorRed);
+        _registrationController.isUploading.value = false;
       } else {
         flutterToastMessage(
             title: "Success",
             message: "User registration success",
             position: SnackPosition.TOP,
             backgroundColor: ColorConfig.successGreen);
+        _registrationController.isUploading.value = false;
         Get.off(() => const BottomNavigationbarHandler());
       }
     }
@@ -129,6 +132,7 @@ class Register extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
               child: CustomeButton(
+                getxController: _registrationController,
                 buttonText: "Sign Up",
                 callbackFunction: clickRegisterButton,
               ),

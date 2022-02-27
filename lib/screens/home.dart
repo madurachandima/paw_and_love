@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:paw_and_love/Config/assets_path.dart';
 
 import 'package:paw_and_love/controller/home_controller.dart';
-import 'package:paw_and_love/screens/common_disses.dart';
+import 'package:paw_and_love/screens/dog_common_disses.dart';
 import 'package:paw_and_love/screens/dog_profiles.dart';
 import 'package:paw_and_love/screens/breeders_&_sellers.dart';
 import 'package:paw_and_love/screens/veterinarian.dart';
@@ -49,7 +49,7 @@ class Home extends StatelessWidget {
                       image: disease,
                       text: "Common Disses",
                       context: context,
-                      pageName: const CommonDisses())
+                      pageName: const DogCommonDisses())
                 ],
               ),
               Row(
