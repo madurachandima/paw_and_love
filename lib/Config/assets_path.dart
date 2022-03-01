@@ -5,6 +5,8 @@ final String disease = _getImagePath('disease.jpg');
 final String profile = _getImagePath('profile.jpg');
 final String clinic = _getImagePath('vet.jpg');
 final String addImage = _getImagePath('add_image.png');
+final String sickDog = _getImagePath('sick_dog.png');
+final String chatbot = _getImagePath("chatbot.png");
 
 String _getImagePath(String filename) {
   return imageAssetsRoot + filename;

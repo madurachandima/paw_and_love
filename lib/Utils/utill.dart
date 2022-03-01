@@ -2,7 +2,11 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:paw_and_love/Config/color_config.dart';
+import 'package:paw_and_love/Utils/snackbar.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 Future<DateTime?> getDate(BuildContext context) async {
   DateTime? selectedDate = await showDatePicker(
@@ -43,5 +47,23 @@ pickImage(ImageSource source) async {
     Uint8List a = await _file.readAsBytes();
 
     return [a, _file.path];
+  }
+}
+
+openBrowser(String url) async {
+  try {
+    if (!await launch(url)) {
+      flutterToastMessage(
+          backgroundColor: ColorConfig.errorRed,
+          message: "Could not launch",
+          position: SnackPosition.TOP,
+          title: "Error");
+    }
+  } catch (e) {
+    flutterToastMessage(
+        backgroundColor: ColorConfig.errorRed,
+        message: "Somthing is wrong",
+        position: SnackPosition.TOP,
+        title: "Error");
   }
 }

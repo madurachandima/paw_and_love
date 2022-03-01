@@ -7,7 +7,8 @@ class ColorConfig {
   static const Color lightGray = Color(0xFFEEEEEE);
   static const Color white = Color(0xFFFFF8F3);
   static const Color darkBlue = Color(0xFF14274E);
-  static const Color textColorDark = Color(0xFF121212);
+  // static const Color textColorDark = Color(0xFF121212);
+  static const Color textColorDark = Color.fromARGB(185, 18, 18, 18);
   static const Color textColorGray = Color(0xFFEEEEEE);
   static const Color yellow = Color(0xffFFCF6F);
   static Color errorRed = Colors.redAccent[700]!.withOpacity(0.5);

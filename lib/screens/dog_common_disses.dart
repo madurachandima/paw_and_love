@@ -1,11 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:paw_and_love/Config/assets_path.dart';
 import 'package:paw_and_love/Config/color_config.dart';
 import 'package:paw_and_love/Widgets/chat_bot_view.dart';
 import 'package:paw_and_love/Widgets/dog_symptoms_view.dart';
 import 'package:paw_and_love/Widgets/search_textfield.dart';
 import 'package:paw_and_love/controller/dog_common_disses_controller.dart';
+import 'package:paw_and_love/model/dog_illness_model.dart';
 import 'package:sizer/sizer.dart';
 
 class DogCommonDisses extends StatelessWidget {
@@ -16,16 +19,23 @@ class DogCommonDisses extends StatelessWidget {
     DogCommonDissesController _dissesController =
         Get.put(DogCommonDissesController());
     TextEditingController _searchController = TextEditingController();
+
     _searchSymptoms() {
       debugPrint("search");
+    }
+
+    onTextChange(value) {
+      _dissesController.searchQuery.value =
+          value.toString().toUpperCase().trim();
+      debugPrint(_dissesController.searchQuery.value);
     }
 
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: Padding(
-        padding: const EdgeInsets.all(18.0),
-        child: IconButton(
-            onPressed: () {
+          padding: const EdgeInsets.all(18.0),
+          child: InkWell(
+            onTap: () {
               showDialog<void>(
                 context: context,
                 barrierDismissible: false, // user must tap button!
@@ -34,20 +44,24 @@ class DogCommonDisses extends StatelessWidget {
                 },
               );
             },
-            icon: Icon(
-              CupertinoIcons.text_bubble_fill,
-              size: 11.w,
-              color: ColorConfig.blue,
-            )),
+            child: SizedBox(
+              child: Image.asset(
+                chatbot,
+                width: 21.w,
+              ),
+            ),
+          )),
+      appBar: AppBar(
+        elevation: 0,
       ),
-      body: SafeArea(
-          child: Padding(
+      body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20.0),
               child: SearchTextField(
+                onTextChange: onTextChange,
                 callbackFunction: _searchSymptoms,
                 textEditingController: _searchController,
                 hintText: "Search here",
@@ -56,10 +70,38 @@ class DogCommonDisses extends StatelessWidget {
                 textColor: ColorConfig.orange,
               ),
             ),
-            const DogSymptomsView()
+            Obx(() => StreamBuilder(
+                  stream: _dissesController.searchQuery.value.isNotEmpty
+                      ? FirebaseFirestore.instance
+                          .collection("illness")
+                          .where('searchQuery',
+                              arrayContains:
+                                  _dissesController.searchQuery.value)
+                          .snapshots()
+                      : FirebaseFirestore.instance
+                          .collection("illness")
+                          .snapshots(),
+                  builder: (context,
+                      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                          snapshot) {
+                    return Expanded(
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: snapshot.data!.docs.length,
+                          itemBuilder: (context, index) {
+                            return DogSymptomsView(
+                              dogIllnessModel: DogIllnessModel.fromSnap(
+                                  snapshot.data!.docs[index].data()),
+                            );
+                          }),
+                    );
+                  },
+                ))
+
+            //DogSymptomsView()
           ],
         ),
-      )),
+      ),
     );
   }
 }

@@ -80,7 +80,7 @@ class MyApp extends StatelessWidget {
                 bodyText2: TextStyle(
                     fontSize: 15.sp,
                     fontWeight: FontWeight.w500,
-                    color: ColorConfig.yellow),
+                    color: ColorConfig.orange),
 
                 /*
                     *for body text subtitle

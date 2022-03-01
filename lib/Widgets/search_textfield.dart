@@ -11,6 +11,7 @@ class SearchTextField extends StatelessWidget {
   final TextInputType textInputType;
   final Color textColor;
   var callbackFunction;
+  var onTextChange;
   SearchTextField(
       {Key? key,
       required this.textEditingController,
@@ -18,7 +19,8 @@ class SearchTextField extends StatelessWidget {
       required this.lableText,
       required this.textInputType,
       required this.textColor,
-      required this.callbackFunction})
+      required this.callbackFunction,
+      required this.onTextChange})
       : super(key: key);
 
   @override
@@ -37,7 +39,9 @@ class SearchTextField extends StatelessWidget {
         width: 2.0,
       ),
     );
+
     return TextField(
+      onChanged: onTextChange,
       controller: textEditingController,
       style: TextStyle(
           color: textColor, fontSize: 15.sp, fontFamily: REGULAR_FONT),
@@ -67,6 +71,5 @@ class SearchTextField extends StatelessWidget {
       ),
       keyboardType: textInputType,
     );
-    ;
   }
 }

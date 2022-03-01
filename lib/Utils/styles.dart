@@ -13,3 +13,11 @@ subTopicStyle() {
     fontSize: 15.sp,
   );
 }
+
+defaultTextStyle() {
+  return TextStyle(color: ColorConfig.textColorDark, fontSize: 14.sp);
+}
+
+defaultTextStyleSubTopic() {
+  return TextStyle(color: ColorConfig.orange, fontSize: 18.sp);
+}
