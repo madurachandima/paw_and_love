@@ -4,12 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:paw_and_love/Services/dog_profile_methods.dart';
 import 'package:paw_and_love/Utils/utill.dart';
-import 'package:paw_and_love/model/dog_profile_model.dart';
+import 'package:paw_and_love/model/vaccination_date_model.dart';
 import 'package:paw_and_love/model/vaccination_model.dart';
 
 enum DogGender { male, female }
 
-class ProfileController extends GetxController {
+class DogProfileController extends GetxController {
   TextEditingController dogNameController = TextEditingController();
   TextEditingController dogOwnerNameController = TextEditingController();
   VaccinationModel vaccinationModel = VaccinationModel();
@@ -41,7 +41,7 @@ class ProfileController extends GetxController {
   getVaccinationByAge({required int age}) {
     for (var i = 0; i < vaccinationModel.ageGroup!.length; i++) {
       var result = vaccinationModel.ageGroup![i].entries.first.key.split('-');
-      // if (age < 16) {
+
       if (age >= int.parse(result[0]) && age <= int.parse(result[1])) {
         var values = vaccinationModel.ageGroup![i].entries.first.value;
         recommendedVaccines.clear();
@@ -64,9 +64,6 @@ class ProfileController extends GetxController {
           recommendedVaccines.add(recomendedMap);
         }
       }
-      // } else {
-      //   debugPrint("cccc");
-      // }
     }
     print(recommendedVaccines);
     print(optionalVaccines);

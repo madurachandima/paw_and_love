@@ -57,10 +57,46 @@ class DogProfileMethod {
       // print(err.message);
       return err.message;
     } catch (e) {
-      print(e);
       return "Somthing is wrong";
     }
     callback();
+    return "success";
+  }
+
+  Future<String?> updateDogProfile(
+      {required String? id,
+      required List? optional,
+      required List? recomonded}) async {
+    try {
+      await _firestore
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection("dog_profiles")
+          .doc(id)
+          .update(
+              {'optional_vaccine': optional, 'recomonded_vaccine': recomonded});
+    } on FirebaseException catch (err) {
+      // print(err.message);
+      return err.message;
+    } catch (e) {
+      return "Somthing is wrong";
+    }
+    return "success";
+  }
+
+  Future deleteDogProfile({required String id}) async {
+    try {
+      await _firestore
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection("dog_profiles")
+          .doc(id)
+          .delete();
+    } on FirebaseException catch (err) {
+      return err.message.toString();
+    } catch (e) {
+      return "Somthing is wrong";
+    }
     return "success";
   }
 }

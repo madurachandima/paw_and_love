@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:paw_and_love/Config/color_config.dart';
 import 'package:paw_and_love/Widgets/dog_profile_circuler_avatar.dart';
+import 'package:paw_and_love/controller/home_controller.dart';
 import 'package:paw_and_love/screens/dog_add_new_profile.dart';
 
 import 'package:sizer/sizer.dart';
@@ -14,6 +15,7 @@ class DogProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    HomeController _controller = Get.find();
     return Scaffold(
       body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
@@ -53,11 +55,24 @@ class DogProfile extends StatelessWidget {
                 return Wrap(
                   children: [
                     Wrap(
-                      children: snapshot.data!.docs
-                          .map((item) => DogProfileCircularAvatar(
-                                snap: item,
-                              ))
-                          .toList(),
+                      children: snapshot.data!.docs.map((item) {
+                        List notifications = [];
+
+                        for (var i = 0;
+                            i < _controller.notificationList.length;
+                            i++) {
+                          if (_controller
+                                  .notificationList[i][0].entries.first.key ==
+                              item.id) {
+                            notifications = _controller.notificationList[i];
+                          }
+                        }
+
+                        return DogProfileCircularAvatar(
+                          notification: notifications,
+                          snap: item,
+                        );
+                      }).toList(),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),

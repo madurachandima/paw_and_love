@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:paw_and_love/Config/assets_path.dart';
 import 'package:paw_and_love/Config/color_config.dart';
 import 'package:paw_and_love/Widgets/chat_bot_view.dart';
+import 'package:paw_and_love/Widgets/customeCircularProgress.dart';
 import 'package:paw_and_love/Widgets/dog_symptoms_view.dart';
 import 'package:paw_and_love/Widgets/search_textfield.dart';
 import 'package:paw_and_love/controller/dog_common_disses_controller.dart';
@@ -84,17 +85,19 @@ class DogCommonDisses extends StatelessWidget {
                   builder: (context,
                       AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
                           snapshot) {
-                    return Expanded(
-                      child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: snapshot.data!.docs.length,
-                          itemBuilder: (context, index) {
-                            return DogSymptomsView(
-                              dogIllnessModel: DogIllnessModel.fromSnap(
-                                  snapshot.data!.docs[index].data()),
-                            );
-                          }),
-                    );
+                    return snapshot.connectionState == ConnectionState.waiting
+                        ? CustomeCircularProgress()
+                        : Expanded(
+                            child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: snapshot.data!.docs.length,
+                                itemBuilder: (context, index) {
+                                  return DogSymptomsView(
+                                    dogIllnessModel: DogIllnessModel.fromSnap(
+                                        snapshot.data!.docs[index].data()),
+                                  );
+                                }),
+                          );
                   },
                 ))
 

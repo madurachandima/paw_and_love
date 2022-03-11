@@ -3,7 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:paw_and_love/screens/bottom_navigationbar_handler.dart';
+import 'package:paw_and_love/middle_screen.dart';
+
 import 'package:paw_and_love/screens/login.dart';
 import 'package:paw_and_love/Config/color_config.dart';
 import 'package:paw_and_love/Config/font_config.dart';
@@ -97,7 +98,7 @@ class MyApp extends StatelessWidget {
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.active) {
                   if (snapshot.hasData) {
-                    return const BottomNavigationbarHandler();
+                    return const MiddleScreen();
                   } else if (snapshot.hasError) {
                     return Center(
                       child: Text("${snapshot.error}"),

@@ -2,11 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:paw_and_love/screens/home.dart';
 import 'package:paw_and_love/screens/dog_profiles.dart';
-
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class BottomNavigationbarHandler extends StatelessWidget {
-  const BottomNavigationbarHandler({Key? key}) : super(key: key);
+  final String? userRole;
+  const BottomNavigationbarHandler({Key? key, required this.userRole})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class BottomNavigationbarHandler extends StatelessWidget {
         PersistentTabController(initialIndex: 0);
 
     List<Widget> _buildScreens() {
-      return [const Home(), const DogProfile()];
+      return [Home(userRole: userRole), const DogProfile()];
     }
 
     List<PersistentBottomNavBarItem> _navBarsItems() {
@@ -36,7 +37,7 @@ class BottomNavigationbarHandler extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(),
-      body: const Home(),
+      body: Home(userRole: userRole),
       bottomNavigationBar: PersistentTabView(
         context,
         controller: tabController,
