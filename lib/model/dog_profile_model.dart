@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:paw_and_love/model/vaccination_date_model.dart';
 
 class DogProfileModel {
   final String? dogName;
@@ -62,17 +63,4 @@ class DogProfileModel {
         recommendedVaccines: snapshot['recomonded_vaccine'],
         optionalVaccines: snapshot['optional_vaccine']);
   }
-}
-
-class VaccinactionDateModel {
-  DateTime? vaccinatedDate;
-  bool? isVaccinated;
-
-  VaccinactionDateModel(
-      {required this.vaccinatedDate, required this.isVaccinated});
-
-  Map<String, dynamic> toJson() => {
-        'dateTime': vaccinatedDate,
-        'isVaccinated': isVaccinated,
-      };
 }

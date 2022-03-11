@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:paw_and_love/controller/login_controller.dart';
-import 'package:paw_and_love/screens/bottom_navigationbar_handler.dart';
+import 'package:paw_and_love/middle_screen.dart';
 import 'package:paw_and_love/screens/register.dart';
 import 'package:paw_and_love/Config/color_config.dart';
 
@@ -33,7 +33,7 @@ class Login extends StatelessWidget {
             position: SnackPosition.TOP,
             backgroundColor: ColorConfig.successGreen);
         _loginControler.isUploading.value = false;
-        Get.off(() => const BottomNavigationbarHandler());
+        Get.off(() => const MiddleScreen());
       }
     }
 

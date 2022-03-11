@@ -13,8 +13,8 @@ import 'package:paw_and_love/Utils/const.dart';
 import 'package:paw_and_love/Utils/snackbar.dart';
 import 'package:paw_and_love/Utils/styles.dart';
 import 'package:paw_and_love/Widgets/custome_button.dart';
-import 'package:paw_and_love/controller/profile_controller.dart';
-import 'package:paw_and_love/model/dog_profile_model.dart';
+import 'package:paw_and_love/controller/dog_profile_controller.dart';
+import 'package:paw_and_love/model/vaccination_date_model.dart';
 import 'package:paw_and_love/screens/dog_profiles.dart';
 import 'package:sizer/sizer.dart';
 import 'package:paw_and_love/Utils/utill.dart';
@@ -25,7 +25,7 @@ class AddNewDogProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ProfileController _profileController = Get.put(ProfileController());
+    DogProfileController _profileController = Get.put(DogProfileController());
 
     createNewDogProfle() async {
       _profileController.isUploading.value = true;
@@ -193,7 +193,8 @@ class AddNewDogProfile extends StatelessWidget {
                           horizontal: 20, vertical: 10),
                       child: Obx(() => CustomeTextInputField(
                           callbackFunction: () async {
-                            DateTime? selectedDate = await getDate(context);
+                            DateTime? selectedDate = await getDate(
+                                context: context, initialDate: DateTime.now());
 
                             if (selectedDate!.isBefore(DateTime.now())) {
                               // ignore: unnecessary_null_comparison
@@ -362,7 +363,9 @@ class AddNewDogProfile extends StatelessWidget {
                                     onChanged: (value) async {
                                       DateTime? dateTime = DateTime.now();
                                       if (value!) {
-                                        dateTime = await getDate(context);
+                                        dateTime = await getDate(
+                                            context: context,
+                                            initialDate: DateTime.now());
                                       }
                                       if (dateTime!.isAfter(DateTime.now())) {
                                         flutterToastMessage(
@@ -423,7 +426,9 @@ class AddNewDogProfile extends StatelessWidget {
                                     onChanged: (value) async {
                                       DateTime? dateTime;
                                       if (value!) {
-                                        dateTime = await getDate(context);
+                                        dateTime = await getDate(
+                                            context: context,
+                                            initialDate: DateTime.now());
                                       }
                                       if (dateTime!.isAfter(DateTime.now())) {
                                         flutterToastMessage(

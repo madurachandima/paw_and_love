@@ -1,3 +1,7 @@
+const String USER_ROLE = "User";
+const String VET_ROLE = "Vet";
+const String SELLER_ROLE = "Seller";
+
 List<String> dogBreeds = [
   "Retrievers (Labrador)",
   "French Bulldogs",
@@ -13,4 +17,26 @@ List<String> dogBreeds = [
   "Australian Shepherds",
   "Yorkshire Terriers",
   "Boxers"
+];
+
+List<String> cites = [
+  "Colombo",
+  "Moratuwa",
+  "Kandy",
+  "Negombo",
+  "Batticaloa",
+  "Sri Jayewardenepura Kotte",
+  "Kilinochchi",
+  "Galle",
+  "Trincomalee",
+  "Jaffna",
+  "Matara",
+  "Anuradhapura",
+  "Ratnapura",
+  "Puttalam",
+  "Badulla",
+  "Mullaittivu",
+  "Matale",
+  "Mannar",
+  "Kurunegala",
 ];

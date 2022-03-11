@@ -7,11 +7,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:paw_and_love/Config/color_config.dart';
 import 'package:paw_and_love/Utils/snackbar.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:intl/intl.dart';
 
-Future<DateTime?> getDate(BuildContext context) async {
+Future<DateTime?> getDate(
+    {required BuildContext? context, required DateTime? initialDate}) async {
   DateTime? selectedDate = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
+      context: context!,
+      initialDate: initialDate!,
       firstDate: DateTime(2000),
       lastDate: DateTime(2025),
       initialEntryMode: DatePickerEntryMode.calendarOnly);
@@ -32,6 +34,13 @@ getDaysByWeeks(int days) {
   } else {
     return 0;
   }
+}
+
+convertTimestampDate(date) {
+  return daysBetween(
+      DateTime.parse(DateFormat("yyyy-MM-dd")
+          .format(DateTime.parse(date.toDate().toString()))),
+      DateTime.now());
 }
 
 Future readjsonFile({required String path}) async {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:group_radio_button/group_radio_button.dart';
-import 'package:paw_and_love/screens/bottom_navigationbar_handler.dart';
+import 'package:paw_and_love/middle_screen.dart';
 import 'package:paw_and_love/screens/login.dart';
 import 'package:paw_and_love/controller/registration_controller.dart';
 import 'package:paw_and_love/Config/color_config.dart';
@@ -35,7 +35,7 @@ class Register extends StatelessWidget {
             position: SnackPosition.TOP,
             backgroundColor: ColorConfig.successGreen);
         _registrationController.isUploading.value = false;
-        Get.off(() => const BottomNavigationbarHandler());
+        Get.off(() => const MiddleScreen());
       }
     }
 

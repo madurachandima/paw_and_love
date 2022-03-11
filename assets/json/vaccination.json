@@ -23,8 +23,7 @@
           { "recommended": ["DHPP,Rabies"] },
           { "optional": ["CoronaVirus","Leptospirosis","Bordetella","Lyme Disease"] }
         ]
-      },
-      {
+      }, {
         "52-104": [
           { "recommended": ["DHPP"] },
           { "optional": ["Influenza","CoronaVirus","Leptospirosis","Bordetella","Lyme Disease"] }
@@ -36,5 +35,6 @@
           { "optional": [] }
         ]
       }
+
   ]
 }
