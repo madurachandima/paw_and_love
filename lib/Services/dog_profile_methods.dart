@@ -30,7 +30,7 @@ class DogProfileMethod {
     } else if (ageByWeek == null) {
       return "Dog birthdate can't be empty";
     } else if (profileImageByte == null) {
-      return "Please upload a dog profilr image";
+      return "Please upload a dog profile image";
     }
 
     try {

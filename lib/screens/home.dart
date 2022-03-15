@@ -8,6 +8,7 @@ import 'package:paw_and_love/screens/dog_common_disses.dart';
 import 'package:paw_and_love/screens/dog_profiles.dart';
 import 'package:paw_and_love/screens/breeders_&_sellers.dart';
 import 'package:paw_and_love/screens/vet_new_profile.dart';
+import 'package:paw_and_love/screens/vet_profile_view.dart';
 import 'package:paw_and_love/screens/veterinarian.dart';
 
 import 'package:sizer/sizer.dart';
@@ -42,7 +43,7 @@ class Home extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  cardWidget(
+                  Obx(() => cardWidget(
                       image: userRole == VET_ROLE
                           ? doctorProfile
                           : userRole == SELLER_ROLE
@@ -51,8 +52,12 @@ class Home extends StatelessWidget {
                       text: "Profile",
                       context: context,
                       pageName: userRole == VET_ROLE
-                          ? const NewVetProfile()
-                          : const DogProfile()),
+                          ? _controller.isHaveCompletedProfile.value
+                              ? ViewVetProfile(
+                                  vetProfileModel: _controller.vetProfileModel,
+                                )
+                              : const NewVetProfile()
+                          : const DogProfile())),
                   const Spacer(),
                   cardWidget(
                       image: disease,

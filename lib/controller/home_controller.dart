@@ -6,14 +6,17 @@ import 'package:get/get.dart';
 import 'package:paw_and_love/Services/home_methods.dart';
 import 'package:paw_and_love/model/vaccination_date_model.dart';
 import 'package:paw_and_love/model/vaccination_model.dart';
+import 'package:paw_and_love/model/vet_profile_model.dart';
 
 class HomeController extends GetxController {
   VaccinationModel vaccinationModel = VaccinationModel();
+  VetProfileModel? vetProfileModel;
   List recommendedVaccines = [];
   List optionalVaccines = [];
   var userName = "".obs;
   var role = "".obs;
   var notificationList = [].obs;
+  var isHaveCompletedProfile = false.obs;
   @override
   void onInit() {
     super.onInit();
@@ -25,8 +28,14 @@ class HomeController extends GetxController {
 
       role.value = snap.get("role");
       userName.value = snap.get("username");
+      try {
+        vetProfileModel = await HomeMethods().getVetProfile();
+        isHaveCompletedProfile.value = true;
+      } catch (e) {
+        isHaveCompletedProfile.value = false;
+      }
+
       notificationList.value = await HomeMethods().getDogsVaccinationdetails();
-      //print(notificationList);
     }();
   }
 

@@ -10,6 +10,7 @@ class CustomeTextInputField extends StatelessWidget {
   final TextInputType textInputType;
   final Color textColor;
   final bool isReadOnly;
+  final bool isMultyLineText;
   var callbackFunction;
 
   CustomeTextInputField(
@@ -21,6 +22,7 @@ class CustomeTextInputField extends StatelessWidget {
       required this.textInputType,
       required this.textColor,
       required this.isReadOnly,
+      this.isMultyLineText = false,
       this.callbackFunction})
       : super(key: key);
 
@@ -46,6 +48,10 @@ class CustomeTextInputField extends StatelessWidget {
           callbackFunction();
         }
       },
+      textInputAction:
+          isMultyLineText ? TextInputAction.newline : TextInputAction.none,
+      minLines: 1,
+      maxLines: isMultyLineText ? 5 : 1,
       readOnly: isReadOnly,
       controller: textEditingController,
       style: TextStyle(

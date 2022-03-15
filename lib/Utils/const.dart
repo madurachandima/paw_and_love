@@ -40,3 +40,11 @@ List<String> cites = [
   "Mannar",
   "Kurunegala",
 ];
+
+List<String> openDays = ["Every Days", "Every Week Days", "Every Week End"];
+List<String> closeDays = [
+  "None",
+  "Excepts Public Holidays",
+  "Excepts Bank Holidays",
+  "Excepts Merchant  Holidays"
+];

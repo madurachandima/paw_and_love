@@ -12,13 +12,10 @@ import 'package:paw_and_love/Config/color_config.dart';
 import 'package:paw_and_love/Config/font_config.dart';
 import 'package:paw_and_love/Utils/const.dart';
 import 'package:paw_and_love/Utils/snackbar.dart';
-import 'package:paw_and_love/Utils/styles.dart';
 import 'package:paw_and_love/Widgets/custome_button.dart';
-import 'package:paw_and_love/controller/dog_profile_controller.dart';
+import 'package:paw_and_love/controller/home_controller.dart';
 import 'package:paw_and_love/controller/vet_profile_controller.dart';
-import 'package:paw_and_love/model/dog_profile_model.dart';
-import 'package:paw_and_love/screens/dog_add_new_profile.dart';
-import 'package:paw_and_love/screens/dog_profiles.dart';
+import 'package:paw_and_love/screens/vet_profile_view.dart';
 import 'package:sizer/sizer.dart';
 import 'package:paw_and_love/Utils/utill.dart';
 import 'package:paw_and_love/Widgets/custome_text_input_field.dart';
@@ -28,9 +25,9 @@ class NewVetProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //  DogProfileController _profileController = Get.put(DogProfileController());
     VetProfileController _vetProfileController =
         Get.put(VetProfileController());
+    HomeController _homeController = Get.find();
 
     createNewDogProfle() async {
       _vetProfileController.isUploading.value = true;
@@ -46,11 +43,13 @@ class NewVetProfile extends StatelessWidget {
       } else {
         flutterToastMessage(
             title: "Success",
-            message: "Dog profile is created",
+            message: "Your profile created",
             position: SnackPosition.TOP,
             backgroundColor: ColorConfig.successGreen);
-        Get.off(() => const DogProfile());
         _vetProfileController.isUploading.value = false;
+        Get.off(() => ViewVetProfile(
+              vetProfileModel: _homeController.vetProfileModel,
+            ));
       }
     }
 
@@ -94,9 +93,7 @@ class NewVetProfile extends StatelessWidget {
                             bottom: 10,
                             left: 80.w,
                             child: InkWell(
-                              onTap: () {
-                                selectImage();
-                              },
+                              onTap: () => selectImage(),
                               child: const Icon(
                                 CupertinoIcons.camera_circle,
                                 color: Colors.white60,
@@ -114,7 +111,7 @@ class NewVetProfile extends StatelessWidget {
                       padding: const EdgeInsets.only(
                           left: 20, right: 20, top: 20, bottom: 10),
                       child: CustomeTextInputField(
-                          isReadOnly: false,
+                          isReadOnly: true,
                           textEditingController:
                               _vetProfileController.vetNameController,
                           isPass: false,
@@ -141,7 +138,7 @@ class NewVetProfile extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 10),
                       child: SizedBox(
-                        height: 8.h,
+                        height: 8.5.h,
                         child: Theme(
                           data: Theme.of(context).copyWith(
                             canvasColor: Colors.white,
@@ -162,12 +159,14 @@ class NewVetProfile extends StatelessWidget {
                               labelText: "Please Select The City",
                               labelStyle: TextStyle(
                                   color: ColorConfig.orange,
-                                  fontSize: 13.sp,
+                                  fontSize: 15.sp,
+                                  fontWeight: FontWeight.w500,
                                   fontFamily: REGULAR_FONT),
                               hintText: "City",
                               hintStyle: TextStyle(
                                   color: ColorConfig.orange,
-                                  fontSize: 13.sp,
+                                  fontSize: 15.sp,
+                                  fontWeight: FontWeight.w500,
                                   fontFamily: REGULAR_FONT),
                               fillColor: ColorConfig.orange,
                               focusedBorder: OutlineInputBorder(
@@ -198,42 +197,43 @@ class NewVetProfile extends StatelessWidget {
                       padding: const EdgeInsets.only(
                           left: 20, right: 20, top: 20, bottom: 10),
                       child: CustomeTextInputField(
+                          isMultyLineText: true,
                           isReadOnly: false,
                           textEditingController:
-                              _vetProfileController.vetPhoneNumberController,
+                              _vetProfileController.aboutvetController,
                           isPass: false,
                           hintText: "About you",
                           lableText: "Please Enter About You",
-                          textInputType: TextInputType.number,
+                          textInputType: TextInputType.multiline,
                           textColor: ColorConfig.orange),
                     ),
-                    Wrap(
-                      children: [
-                        // Wrap(
-                        //   children: snapshot.data!.docs
-                        //       .map((item) => DogProfileCircularAvatar(
-                        //             snap: item,
-                        //           ))
-                        //       .toList(),
-                        // ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: SizedBox(
-                            height: 20.h,
-                            width: 25.w,
-                            child: IconButton(
-                                onPressed: () {
-                                  Get.to(() => const AddNewDogProfile());
-                                },
-                                icon: const Icon(
-                                  CupertinoIcons.add_circled,
-                                  size: 100,
-                                  color: ColorConfig.yellow,
-                                )),
-                          ),
-                        )
-                      ],
-                    ),
+                    // Wrap(
+                    //   children: [
+                    //     // Wrap(
+                    //     //   children: snapshot.data!.docs
+                    //     //       .map((item) => DogProfileCircularAvatar(
+                    //     //             snap: item,
+                    //     //           ))
+                    //     //       .toList(),
+                    //     // ),
+                    //     Padding(
+                    //       padding: const EdgeInsets.all(8.0),
+                    //       child: SizedBox(
+                    //         height: 20.h,
+                    //         width: 25.w,
+                    //         child: IconButton(
+                    //             onPressed: () {
+                    //               Get.to(() => const AddNewClinic());
+                    //             },
+                    //             icon: const Icon(
+                    //               CupertinoIcons.add_circled,
+                    //               size: 100,
+                    //               color: ColorConfig.yellow,
+                    //             )),
+                    //       ),
+                    //     )
+                    //   ],
+                    // ),
 
                     Padding(
                       padding: const EdgeInsets.symmetric(

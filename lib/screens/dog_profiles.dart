@@ -7,6 +7,7 @@ import 'package:paw_and_love/Config/color_config.dart';
 import 'package:paw_and_love/Widgets/dog_profile_circuler_avatar.dart';
 import 'package:paw_and_love/controller/home_controller.dart';
 import 'package:paw_and_love/screens/dog_add_new_profile.dart';
+import 'package:paw_and_love/screens/login.dart';
 
 import 'package:sizer/sizer.dart';
 
@@ -22,7 +23,48 @@ class DogProfile extends StatelessWidget {
             return [
               SliverAppBar(
                 elevation: 0,
-                /* backgroundColor: ColorConfig.darkBlue, */
+                actions: [
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: InkWell(
+                      onTap: () async {
+                        showDialog<void>(
+                          context: context,
+                          barrierDismissible: false, // user must tap button!
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Log Out'),
+                              content: SingleChildScrollView(
+                                child: ListBody(
+                                  children: const <Widget>[
+                                    Text('Are you sure ?'),
+                                  ],
+                                ),
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: const Text('Yes'),
+                                  onPressed: () async {
+                                    await FirebaseAuth.instance.signOut();
+                                    Navigator.of(context).pop();
+                                    Get.off(() => const Login());
+                                  },
+                                ),
+                                TextButton(
+                                  child: const Text('No'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      child: const Icon(Icons.logout_outlined),
+                    ),
+                  )
+                ],
                 expandedHeight: 50.h,
                 floating: false,
                 pinned: true,

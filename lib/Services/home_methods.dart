@@ -5,6 +5,7 @@ import 'package:paw_and_love/model/dog_profile_model.dart';
 import 'package:paw_and_love/model/vaccination_date_model.dart';
 import 'package:paw_and_love/model/vaccination_model.dart';
 import 'package:intl/intl.dart';
+import 'package:paw_and_love/model/vet_profile_model.dart';
 
 class HomeMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -99,5 +100,20 @@ class HomeMethods {
       }
     }
     return vaccines;
+  }
+
+  Future getVetProfile() async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> snap = await _firestore
+          .collection("users")
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection("vet_profile")
+          .get();
+
+      VetProfileModel vetProfileModel = VetProfileModel.fromSnap(snap.docs[0]);
+      return vetProfileModel;
+    } catch (e) {
+      return null;
+    }
   }
 }
