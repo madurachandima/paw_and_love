@@ -9,6 +9,10 @@ import 'package:paw_and_love/model/vaccination_model.dart';
 
 class HomeController extends GetxController {
   VaccinationModel vaccinationModel = VaccinationModel();
+<<<<<<< Updated upstream
+=======
+  var vetProfileModel = VetProfileModel().obs;
+>>>>>>> Stashed changes
   List recommendedVaccines = [];
   List optionalVaccines = [];
   var userName = "".obs;
@@ -25,6 +29,20 @@ class HomeController extends GetxController {
 
       role.value = snap.get("role");
       userName.value = snap.get("username");
+<<<<<<< Updated upstream
+=======
+      try {
+        vetProfileModel.value = await HomeMethods().getVetProfile();
+        if (vetProfileModel != null) {
+          isHaveCompletedProfile.value = true;
+        } else {
+          isHaveCompletedProfile.value = false;
+        }
+      } catch (e) {
+        isHaveCompletedProfile.value = false;
+      }
+
+>>>>>>> Stashed changes
       notificationList.value = await HomeMethods().getDogsVaccinationdetails();
       //print(notificationList);
     }();

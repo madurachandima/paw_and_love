@@ -51,8 +51,15 @@ class Home extends StatelessWidget {
                       text: "Profile",
                       context: context,
                       pageName: userRole == VET_ROLE
+<<<<<<< Updated upstream
                           ? const NewVetProfile()
                           : const DogProfile()),
+=======
+                          ? _controller.isHaveCompletedProfile.value
+                              ? const ViewVetProfile()
+                              : const NewVetProfile()
+                          : const DogProfile())),
+>>>>>>> Stashed changes
                   const Spacer(),
                   cardWidget(
                       image: disease,

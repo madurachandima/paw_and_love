@@ -14,7 +14,10 @@ import 'package:paw_and_love/Utils/const.dart';
 import 'package:paw_and_love/Utils/snackbar.dart';
 import 'package:paw_and_love/Utils/styles.dart';
 import 'package:paw_and_love/Widgets/custome_button.dart';
+<<<<<<< Updated upstream
 import 'package:paw_and_love/controller/dog_profile_controller.dart';
+=======
+>>>>>>> Stashed changes
 import 'package:paw_and_love/controller/vet_profile_controller.dart';
 import 'package:paw_and_love/model/dog_profile_model.dart';
 import 'package:paw_and_love/screens/dog_add_new_profile.dart';
@@ -51,6 +54,10 @@ class NewVetProfile extends StatelessWidget {
             backgroundColor: ColorConfig.successGreen);
         Get.off(() => const DogProfile());
         _vetProfileController.isUploading.value = false;
+<<<<<<< Updated upstream
+=======
+        Get.off(() => const ViewVetProfile());
+>>>>>>> Stashed changes
       }
     }
 

@@ -41,7 +41,7 @@ class CustomeTextInputField extends StatelessWidget {
       ),
     );
     return TextField(
-      onTap: () {
+      onTap: () async {
         if (callbackFunction != null) {
           callbackFunction();
         }
